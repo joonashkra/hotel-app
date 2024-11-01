@@ -5,7 +5,7 @@ using System;
 
 namespace HotelApp.Server
 {
-    public class Program
+    public partial class Program
     {
         public static void Main(string[] args)
         {
