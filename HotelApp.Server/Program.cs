@@ -30,7 +30,22 @@ namespace HotelApp.Server
             builder.Services.AddSingleton<RoomService>();
             builder.Services.AddControllers();
 
+            var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                    policy =>
+                    {
+                        policy.WithOrigins("http://localhost:3000")
+                            .AllowAnyMethod()
+                            .AllowAnyHeader();
+                    });
+            });
+
             var app = builder.Build();
+
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.MapControllers();
 
