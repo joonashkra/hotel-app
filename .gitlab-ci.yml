@@ -3,6 +3,9 @@ stages:          # List of stages for jobs, and their order of execution
   - test
   - deploy
 
+# Use the official .NET SDK image for building and testing .NET projects
+image: mcr.microsoft.com/dotnet/sdk:7.0   # You can use the latest stable version of .NET SDK here
+
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
   script:
