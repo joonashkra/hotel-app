@@ -10,7 +10,7 @@ before_script:
   # Install Node.js (required for building certain projects)
   - curl -fsSL https://deb.nodesource.com/setup_18.x | bash -  # Install Node.js setup
   - apt-get install -y nodejs  # Install Node.js
-  
+
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
   script:
