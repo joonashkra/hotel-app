@@ -1,3 +1,4 @@
 C:\Users\OMISTAJA\Documents\HotelApp\hotelapp.client\obj\Debug\hotelapp.client.esproj.CoreCompileInputs.cache
 C:\Users\OMISTAJA\Documents\DevOps\repo\Devops\hotelapp.client\obj\Debug\hotelapp.client.esproj.CoreCompileInputs.cache
 C:\Users\OMISTAJA\Documents\DevOps\gitlab\hotelapp\hotelapp.client\obj\Debug\hotelapp.client.esproj.CoreCompileInputs.cache
+C:\Users\OMISTAJA\Documents\ASPNETREACT\JooEiSaatana\hotelapp\hotelapp.client\obj\Debug\hotelapp.client.esproj.CoreCompileInputs.cache
