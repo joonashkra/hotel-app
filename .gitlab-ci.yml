@@ -4,13 +4,14 @@ stages:          # List of stages for jobs, and their order of execution
   - deploy
 
 # Use the official .NET SDK image for building and testing .NET projects
-image: mcr.microsoft.com/dotnet/sdk:7.0   # You can use the latest stable version of .NET SDK here
+image: mcr.microsoft.com/dotnet/sdk:7.0   # Use .NET SDK 7.0 as base
 
 before_script:
-  # Install Node.js (required for building certain projects)
-  - curl -fsSL https://deb.nodesource.com/setup_18.x | bash -  # Install Node.js setup
-  - apt-get install -y nodejs  # Install Node.js
-  
+  # Install .NET 6.0 SDK and Runtime (to support projects targeting .NET 6.0)
+  - curl -sSL https://dotnet.microsoft.com/download/dotnet/6.0 | bash -   # Install .NET 6.0 SDK
+  - apt-get update
+  - apt-get install -y dotnet-runtime-6.0   # Install .NET 6.0 Runtime
+
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
   script:
