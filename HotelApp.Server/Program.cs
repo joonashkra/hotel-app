@@ -18,7 +18,6 @@ namespace HotelApp.Server
             }
 
             var builder = WebApplication.CreateBuilder(args);
-            builder.WebHost.UseUrls("http://localhost:5000");
 
             builder.Configuration.AddInMemoryCollection(new Dictionary<string, string>
             { {"HotelAppDatabase:ConnectionURI", connectionURI }
@@ -44,6 +43,12 @@ namespace HotelApp.Server
             });
 
             var app = builder.Build();
+
+            //For running app locally with dotnet, not Docker
+            if (app.Environment.IsDevelopment())
+            {
+                builder.WebHost.UseUrls("http://localhost:5000");
+            }
 
             app.UseCors(MyAllowSpecificOrigins);
 
