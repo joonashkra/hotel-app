@@ -28,6 +28,8 @@ namespace HotelApp.Server.Tests.Rooms
 
             var rooms = await response.Content.ReadFromJsonAsync<List<Room>>();
 
+            Console.WriteLine("Rooms: " + rooms);
+
             Assert.NotNull(rooms);
             Assert.NotEmpty(rooms);
         }

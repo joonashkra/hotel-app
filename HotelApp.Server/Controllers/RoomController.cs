@@ -23,12 +23,7 @@ public class RoomController : ControllerBase {
     [HttpGet("{id:length(24)}")]
     public async Task<ActionResult<Room>> Get(string id)
     {
-        if (!ObjectId.TryParse(id, out var roomId))
-        {
-            throw new ArgumentException("Invalid ObjectId format", nameof(id));
-        }
-
-        var room = await _roomService.GetRoomByIdAsync(roomId);
+        var room = await _roomService.GetRoomByIdAsync(id);
 
         if (room is null)
         {
@@ -70,12 +65,8 @@ public class RoomController : ControllerBase {
     [HttpPut("{id}")]
     public async Task<ActionResult> Put(string id, [FromBody] CreateRoomDto updatedRoom)
     {
-        if (!ObjectId.TryParse(id, out var roomId))
-        {
-            throw new ArgumentException("Invalid ObjectId format", nameof(id));
-        }
 
-        var targetRoom = await _roomService.GetRoomByIdAsync(roomId);
+        var targetRoom = await _roomService.GetRoomByIdAsync(id);
         
         if (targetRoom == null)
         {
@@ -84,14 +75,14 @@ public class RoomController : ControllerBase {
 
         var updatedRoomModel = new Room
         {
-            Id = roomId,
+            Id = id,
             Location = updatedRoom.Location,
             Features = updatedRoom.Features,
             IsAvailable = updatedRoom.IsAvailable,
             Price = updatedRoom.Price
         };
 
-        await _roomService.UpdateRoomAsync(roomId, updatedRoomModel);
+        await _roomService.UpdateRoomAsync(id, updatedRoomModel);
 
         return NoContent();
     }
@@ -99,19 +90,15 @@ public class RoomController : ControllerBase {
     [HttpDelete("{id}")]
     public async Task<ActionResult> Delete(string id)
     {
-        if (!ObjectId.TryParse(id, out var roomId))
-        {
-            throw new ArgumentException("Invalid ObjectId format", nameof(id));
-        }
 
-        var targetRoom = await _roomService.GetRoomByIdAsync(roomId);
+        var targetRoom = await _roomService.GetRoomByIdAsync(id);
 
         if (targetRoom == null)
         {
             return NotFound("Couldn't find a room with the same ID, nothing removed");
         }
 
-        bool deletionSuccessful = await _roomService.DeleteRoomAsync(roomId);
+        bool deletionSuccessful = await _roomService.DeleteRoomAsync(id);
         
         if (deletionSuccessful == true)
         {
