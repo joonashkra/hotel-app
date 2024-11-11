@@ -53,7 +53,15 @@ namespace HotelApp.Server.Tests.Abstractions
                 { "Price", 123 }
             };
 
+            Console.WriteLine("Inserting room: " + sampleRoom.ToJson());
             await collection.InsertOneAsync(sampleRoom);
+
+            var roomsInDb = await collection.Find(FilterDefinition<BsonDocument>.Empty).ToListAsync();
+            Console.WriteLine("Rooms in DB: " + roomsInDb.Count);
+            foreach (var room in roomsInDb)
+            {
+                Console.WriteLine(room.ToJson());
+            }
         }
 
         public async new Task DisposeAsync()
