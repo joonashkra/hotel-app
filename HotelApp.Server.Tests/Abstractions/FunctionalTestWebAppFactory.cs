@@ -48,7 +48,7 @@ namespace HotelApp.Server.Tests.Abstractions
 
             var sampleRoom = new BsonDocument
             {
-                { "_id", ObjectId.Parse("6724ffed0e5a4a8e173d020a") }, // Use ObjectId for _id
+                { "_id", ObjectId.GenerateNewId() },
                 { "Location", "TestLocation" },
                 { "Features", new BsonArray { "TestFeature1", "TestFeature2" } },
                 { "IsAvailable", true },

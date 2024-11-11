@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace HotelApp.Server.Tests.Rooms
 {
@@ -21,7 +22,7 @@ namespace HotelApp.Server.Tests.Rooms
         [Fact]
         public async Task Should_ReturnRoomsByLocation()
         {
-            HttpResponseMessage response = await _httpClient.GetAsync("api/rooms/location/Helsinki");
+            HttpResponseMessage response = await _httpClient.GetAsync("api/roomsTest/location/TestLocation");
 
             response.EnsureSuccessStatusCode();
 
