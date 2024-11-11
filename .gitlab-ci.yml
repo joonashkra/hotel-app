@@ -8,6 +8,7 @@ before_script:
   - curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
   - apt-get install -y nodejs
   - dotnet restore HotelApp.Server/HotelApp.Server.csproj
+  - dotnet run --project HotelApp.Server/HotelApp.Server.csproj
 
 build:
   stage: build
