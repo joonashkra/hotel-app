@@ -24,6 +24,8 @@ namespace HotelApp.Server.Tests.Rooms
 
             string responseBody = await response.Content.ReadAsStringAsync();
 
+            Console.WriteLine("Response Body: " + responseBody);
+
             var rooms = await response.Content.ReadFromJsonAsync<List<Room>>();
 
             Console.WriteLine("Rooms: " + rooms);

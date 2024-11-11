@@ -25,22 +25,22 @@ public class RoomService {
     public async Task<List<Room>> GetRoomsByLocationAsync(string Location) =>
         await _roomsCollection.Find(room => room.Location == Location).ToListAsync();
 
-    public async Task<Room?> GetRoomByIdAsync(ObjectId id)
+    public async Task<Room?> GetRoomByIdAsync(string id)
     {
-        return await _roomsCollection.Find(room => room.Id.Equals(id)).FirstOrDefaultAsync();
+        return await _roomsCollection.Find(room => room.Id == id).FirstOrDefaultAsync();
     }
 
-    public async Task UpdateRoomAsync(ObjectId id, Room updatedRoom)
+    public async Task UpdateRoomAsync(string id, Room updatedRoom)
     {
-        await _roomsCollection.ReplaceOneAsync(room => room.Id.Equals(id), updatedRoom);
+        await _roomsCollection.ReplaceOneAsync(room => room.Id == id, updatedRoom);
     }
 
     public async Task PostRoomAsync(Room newRoom) =>
         await _roomsCollection.InsertOneAsync(newRoom);
 
-    public async Task<bool> DeleteRoomAsync(ObjectId id)
+    public async Task<bool> DeleteRoomAsync(string id)
     {
-        var result = await _roomsCollection.DeleteOneAsync(room => room.Id.Equals(id));
+        var result = await _roomsCollection.DeleteOneAsync(room => room.Id == id);
 
         return result.DeletedCount > 0;
     }
