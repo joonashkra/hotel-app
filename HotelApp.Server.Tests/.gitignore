@@ -235,3 +235,6 @@ _Pvt_Extensions
 
 .env
 .vs/
+
+#REST CLIENT files
+.http

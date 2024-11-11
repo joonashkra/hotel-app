@@ -1,0 +1,14 @@
+# For more info on HTTP files go to https://aka.ms/vs/httpfile
+
+GET http://localhost:5000/api/rooms/location/
+
+###
+POST http://localhost:5000/api/rooms
+Content-Type: application/json
+
+{
+  "location": "Paris",
+  "features": ["wifi", "pool"],
+  "isAvailable": true,
+  "price": 120
+}

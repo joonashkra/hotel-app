@@ -1,5 +1,6 @@
 using System.Security.Cryptography.X509Certificates;
 using HotelApp.Server.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
@@ -20,4 +21,9 @@ public class RoomService {
     public async Task<List<Room>> GetRoomsAsync() =>
         await _roomsCollection.Find(_ => true).ToListAsync();
 
+    public async Task<List<Room>> GetRoomsByLocationAsync(string Location) =>
+        await _roomsCollection.Find(room => room.Location == Location).ToListAsync();
+
+    public async Task PostRoomAsync(Room newRoom) =>
+        await _roomsCollection.InsertOneAsync(newRoom);
 }
