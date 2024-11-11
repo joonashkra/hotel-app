@@ -1,4 +1,4 @@
-﻿using HotelApp.Server.Models;
+using HotelApp.Server.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
@@ -44,8 +44,6 @@ namespace HotelApp.Server.Tests.Abstractions
             var _database = _client.GetDatabase(_databaseName);
             var collection = _database.GetCollection<BsonDocument>(_collectionName);
 
-            await collection.DeleteManyAsync(FilterDefinition<BsonDocument>.Empty);
-
             var sampleRoom = new BsonDocument
             {
                 { "_id", ObjectId.GenerateNewId() },
@@ -56,6 +54,8 @@ namespace HotelApp.Server.Tests.Abstractions
             };
 
             await collection.InsertOneAsync(sampleRoom);
+
+            var roomsInDb = await collection.Find(FilterDefinition<BsonDocument>.Empty).ToListAsync();
         }
 
         public async new Task DisposeAsync()

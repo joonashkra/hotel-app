@@ -17,8 +17,18 @@ public class RoomController : ControllerBase {
         _roomService = roomService;
 
     [HttpGet]
-    public async Task<List<Room>> Get() =>
-        await _roomService.GetRoomsAsync();
+    public async Task<ActionResult<List<Room>>> Get()
+    {
+        var rooms = await _roomService.GetRoomsAsync();
+
+        if (rooms == null || rooms.Count == 0)
+        {
+            return NotFound($"No rooms found.");
+        }
+
+        return Ok(rooms);
+    }
+
 
     [HttpGet("{id:length(24)}")]
     public async Task<ActionResult<Room>> Get(string id)

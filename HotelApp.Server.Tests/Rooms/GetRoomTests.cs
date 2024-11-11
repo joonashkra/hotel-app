@@ -1,4 +1,4 @@
-﻿using HotelApp.Server.Tests.Abstractions;
+using HotelApp.Server.Tests.Abstractions;
 using HotelApp.Server.Models;
 using System.Net.Http;
 using Xunit;
@@ -24,11 +24,22 @@ namespace HotelApp.Server.Tests.Rooms
 
             string responseBody = await response.Content.ReadAsStringAsync();
 
-            Console.WriteLine("Response Body: " + responseBody);
-
             var rooms = await response.Content.ReadFromJsonAsync<List<Room>>();
 
-            Console.WriteLine("Rooms: " + rooms);
+            Assert.NotNull(rooms);
+            Assert.NotEmpty(rooms);
+        }
+
+        [Fact]
+        public async Task Should_ReturnRoomsByLocation()
+        {
+            HttpResponseMessage response = await _httpClient.GetAsync("api/rooms/Location/TestLocation");
+
+            response.EnsureSuccessStatusCode();
+
+            string responseBody = await response.Content.ReadAsStringAsync();
+
+            var rooms = await response.Content.ReadFromJsonAsync<List<Room>>();
 
             Assert.NotNull(rooms);
             Assert.NotEmpty(rooms);
