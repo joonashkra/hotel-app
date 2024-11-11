@@ -20,6 +20,24 @@ public class RoomController : ControllerBase {
     public async Task<List<Room>> Get() =>
         await _roomService.GetRoomsAsync();
 
+    [HttpGet("{id:length(24)}")]
+    public async Task<ActionResult<Room>> Get(string id)
+    {
+        if (!ObjectId.TryParse(id, out var roomId))
+        {
+            throw new ArgumentException("Invalid ObjectId format", nameof(id));
+        }
+
+        var room = await _roomService.GetRoomByIdAsync(roomId);
+
+        if (room is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(room);
+    }
+
     [HttpGet("location/{Location}")]
     public async Task<ActionResult<List<Room>>> GetByLocation(string Location)
     {
@@ -49,7 +67,7 @@ public class RoomController : ControllerBase {
         return CreatedAtAction(nameof(Get), new { id = newRoom.Id }, newRoom);
     }
 
-    [HttpPut("_id/{id}")]
+    [HttpPut("{id}")]
     public async Task<ActionResult> Put(string id, [FromBody] CreateRoomDto updatedRoom)
     {
         if (!ObjectId.TryParse(id, out var roomId))
@@ -78,7 +96,7 @@ public class RoomController : ControllerBase {
         return NoContent();
     }
 
-    [HttpDelete("_id/{id}")]
+    [HttpDelete("{id}")]
     public async Task<ActionResult> Delete(string id)
     {
         if (!ObjectId.TryParse(id, out var roomId))

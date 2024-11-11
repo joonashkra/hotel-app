@@ -25,7 +25,7 @@ public class RoomService {
     public async Task<List<Room>> GetRoomsByLocationAsync(string Location) =>
         await _roomsCollection.Find(room => room.Location == Location).ToListAsync();
 
-    public async Task<Room> GetRoomByIdAsync(ObjectId id)
+    public async Task<Room?> GetRoomByIdAsync(ObjectId id)
     {
         return await _roomsCollection.Find(room => room.Id.Equals(id)).FirstOrDefaultAsync();
     }

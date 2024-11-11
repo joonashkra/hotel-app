@@ -1,6 +1,6 @@
 # For more info on HTTP files go to https://aka.ms/vs/httpfile
 
-GET http://localhost:5000/api/rooms/location/
+GET http://localhost:5000/api/rooms/
 
 ###
 POST http://localhost:5000/api/rooms
