@@ -1,28 +1,20 @@
+image: mcr.microsoft.com/dotnet/sdk:6.0 
+
 stages:          
   - build
   - test
-  - deploy
-
-image: mcr.microsoft.com/dotnet/sdk:6.0 
 
 before_script:
   - curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
   - apt-get install -y nodejs
+  - dotnet restore HotelApp.Server/HotelApp.Server.csproj
 
-build-job:
+build:
   stage: build
   script:
-    - dotnet restore HotelApp.Server/HotelApp.Server.csproj
     - dotnet build HotelApp.Server/HotelApp.Server.csproj
 
-unit-test-job:
+test:
   stage: test
   script:
     - dotnet test HotelApp.Server.Tests/HotelApp.Server.Tests.csproj
-
-deploy-job:
-  stage: deploy
-  environment: production
-  script:
-    - echo "Deploying application..."
-    - echo "Application successfully deployed."
