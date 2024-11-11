@@ -3,7 +3,7 @@
 **/.env
 **/.git
 **/.gitignore
-**/.http
+**/.api.http
 **/.project
 **/.settings
 **/.toolstarget

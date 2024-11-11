@@ -7,8 +7,8 @@ public class Room
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
-    public string? Id { get; set; }
-    
+    public ObjectId Id { get; set; }
+
     public string Location { get; set; } = null!;
 
     public string[] Features { get; set; } = null!;

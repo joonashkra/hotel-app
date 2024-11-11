@@ -22,7 +22,7 @@ namespace HotelApp.Server.Tests.Rooms
         [Fact]
         public async Task Should_ReturnRoomsByLocation()
         {
-            HttpResponseMessage response = await _httpClient.GetAsync("api/roomsTest/location/TestLocation");
+            HttpResponseMessage response = await _httpClient.GetAsync("api/rooms/Location/TestLocation");
 
             response.EnsureSuccessStatusCode();
 

@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using HotelApp.Server.Services;
 using HotelApp.Server.Models;
 using HotelApp.Server.Dtos;
+using ZstdSharp.Unsafe;
+using MongoDB.Bson;
 
 namespace HotelApp.Server.Controllers;
 
@@ -18,7 +20,6 @@ public class RoomController : ControllerBase {
     public async Task<List<Room>> Get() =>
         await _roomService.GetRoomsAsync();
 
-    //get room by location :)
     [HttpGet("location/{Location}")]
     public async Task<ActionResult<List<Room>>> GetByLocation(string Location)
     {
@@ -46,5 +47,62 @@ public class RoomController : ControllerBase {
         await _roomService.PostRoomAsync(newRoom);
 
         return CreatedAtAction(nameof(Get), new { id = newRoom.Id }, newRoom);
+    }
+
+    [HttpPut("_id/{id}")]
+    public async Task<ActionResult> Put(string id, [FromBody] CreateRoomDto updatedRoom)
+    {
+        if (!ObjectId.TryParse(id, out var roomId))
+        {
+            throw new ArgumentException("Invalid ObjectId format", nameof(id));
+        }
+
+        var targetRoom = await _roomService.GetRoomByIdAsync(roomId);
+        
+        if (targetRoom == null)
+        {
+            return NotFound("Couldn't find a room with the same ID, no changes made");
+        }
+
+        var updatedRoomModel = new Room
+        {
+            Id = roomId,
+            Location = updatedRoom.Location,
+            Features = updatedRoom.Features,
+            IsAvailable = updatedRoom.IsAvailable,
+            Price = updatedRoom.Price
+        };
+
+        await _roomService.UpdateRoomAsync(roomId, updatedRoomModel);
+
+        return NoContent();
+    }
+
+    [HttpDelete("_id/{id}")]
+    public async Task<ActionResult> Delete(string id)
+    {
+        if (!ObjectId.TryParse(id, out var roomId))
+        {
+            throw new ArgumentException("Invalid ObjectId format", nameof(id));
+        }
+
+        var targetRoom = await _roomService.GetRoomByIdAsync(roomId);
+
+        if (targetRoom == null)
+        {
+            return NotFound("Couldn't find a room with the same ID, nothing removed");
+        }
+
+        bool deletionSuccessful = await _roomService.DeleteRoomAsync(roomId);
+        
+        if (deletionSuccessful == true)
+        {
+            return NoContent();
+        }
+
+        else
+        {
+            return StatusCode(500, "An error occurred while deleting the room");
+        }
     }
 }
