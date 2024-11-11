@@ -44,8 +44,6 @@ namespace HotelApp.Server.Tests.Abstractions
             var _database = _client.GetDatabase(_databaseName);
             var collection = _database.GetCollection<BsonDocument>(_collectionName);
 
-            await collection.DeleteManyAsync(FilterDefinition<BsonDocument>.Empty);
-
             var sampleRoom = new BsonDocument
             {
                 { "_id", ObjectId.GenerateNewId() },
