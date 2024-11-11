@@ -24,11 +24,30 @@ namespace HotelApp.Server.Tests.Rooms
 
             string responseBody = await response.Content.ReadAsStringAsync();
 
-            Console.WriteLine("Response Body: " + responseBody);
+            Console.WriteLine("Should_ReturnRooms Response Body: " + responseBody);
 
             var rooms = await response.Content.ReadFromJsonAsync<List<Room>>();
 
-            Console.WriteLine("Rooms: " + rooms);
+            Console.WriteLine("Should_ReturnRooms Rooms: " + rooms);
+
+            Assert.NotNull(rooms);
+            Assert.NotEmpty(rooms);
+        }
+
+        [Fact]
+        public async Task Should_ReturnRoomsByLocation()
+        {
+            HttpResponseMessage response = await _httpClient.GetAsync("api/rooms/Location/TestLocation");
+
+            response.EnsureSuccessStatusCode();
+
+            string responseBody = await response.Content.ReadAsStringAsync();
+
+            Console.WriteLine("Should_ReturnRoomsByLocation Response Body: " + responseBody);
+
+            var rooms = await response.Content.ReadFromJsonAsync<List<Room>>();
+
+            Console.WriteLine("Should_ReturnRoomsByLocation Rooms: " + rooms);
 
             Assert.NotNull(rooms);
             Assert.NotEmpty(rooms);
