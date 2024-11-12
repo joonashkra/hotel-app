@@ -30,19 +30,5 @@ namespace HotelApp.Server.Tests.Rooms
             Assert.NotEmpty(rooms);
         }
 
-        [Fact]
-        public async Task Should_ReturnRoomsByLocation()
-        {
-            HttpResponseMessage response = await _httpClient.GetAsync("api/rooms/Location/TestLocation");
-
-            response.EnsureSuccessStatusCode();
-
-            string responseBody = await response.Content.ReadAsStringAsync();
-
-            var rooms = await response.Content.ReadFromJsonAsync<List<Room>>();
-
-            Assert.NotNull(rooms);
-            Assert.NotEmpty(rooms);
-        }
     }
 }

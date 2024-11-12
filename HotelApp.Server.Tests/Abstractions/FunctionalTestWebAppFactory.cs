@@ -56,7 +56,26 @@ namespace HotelApp.Server.Tests.Abstractions
             await collection.InsertOneAsync(sampleRoom);
 
             var roomsInDb = await collection.Find(FilterDefinition<BsonDocument>.Empty).ToListAsync();
+
+            // Confirm that the document exists
+            if (roomsInDb.Any())
+            {
+                var insertedRoom = roomsInDb.FirstOrDefault(r => r["_id"] == sampleRoom["_id"]);
+                if (insertedRoom != null)
+                {
+                    Console.WriteLine("Room inserted successfully.");
+                }
+                else
+                {
+                    throw new Exception("Inserted room not found in the database.");
+                }
+            }
+            else
+            {
+                throw new Exception("No documents found in the collection.");
+            }
         }
+
 
         public async new Task DisposeAsync()
         {
