@@ -17,4 +17,6 @@ public class Room
 
     public int Price { get; set; }
 
+    public User[]? BookedUsers { get; set; }
+
 }
