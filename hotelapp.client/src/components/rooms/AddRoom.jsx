@@ -1,6 +1,6 @@
 
 import { useState } from 'react'
-import roomService from "../services/rooms";
+import roomService from "../../services/rooms";
 
 export default function AddRoom({ rooms, setRooms }) {
 

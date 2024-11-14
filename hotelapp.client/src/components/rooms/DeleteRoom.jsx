@@ -1,5 +1,5 @@
 
-import roomService from "../services/rooms";
+import roomService from "../../services/rooms";
 
 export default function DeleteRoom({ id }) {
     const deleteRoom = () => {
