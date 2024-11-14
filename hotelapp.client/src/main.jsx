@@ -7,7 +7,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import Room from './components/Room.jsx';
+import Room from './components/rooms/Room.jsx';
 import NavBarWrapper from './components/general/NavBarWrapper'
 
 const router = createBrowserRouter([

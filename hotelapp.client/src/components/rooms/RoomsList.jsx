@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import roomService from "../services/rooms";
+import roomService from "../../services/rooms";
 
 export const RoomsList = ({ rooms, setRooms }) => {
     const [isManagement, setIsManagement] = useState(false);
@@ -20,7 +20,7 @@ export const RoomsList = ({ rooms, setRooms }) => {
     if (!rooms) return <div className="loading">Loading...</div>;
 
     return (
-        <ul className="roomList">
+        <ul className="roomList" data-testid='roomList'>
             {rooms.map((room) => (
                 <div key={room.id} style={{ display: "flex" }}>
                     <Link to={`rooms/${room.id}`}>

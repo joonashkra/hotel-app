@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
-import roomService from "../services/rooms";
+import roomService from "../../services/rooms";
 
 
 export default function Room() {

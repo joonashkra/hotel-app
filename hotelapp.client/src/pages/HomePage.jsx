@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from 'react';
-import { RoomsList } from '../components/RoomsList';
+import { RoomsList } from '../components/rooms/RoomsList';
 import roomService from '../services/rooms';
 
 
