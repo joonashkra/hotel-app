@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import roomService from "../../services/rooms";
 
-export default function AddRoom({ rooms, setRooms }) {
+export const AddRoom = ({ rooms, setRooms }) => {
 
     const [location, setLocation] = useState('')
     const [newFeature, setNewFeature] = useState('')
@@ -35,7 +35,7 @@ export default function AddRoom({ rooms, setRooms }) {
         <div className='featuresInput'>
           <label>Add room features: </label>
           <input type='text' name='author' value={newFeature} placeholder='Type new feature...' onChange={({ target }) => setNewFeature(target.value)}/>
-          <button id='addFeatureBtn' type="button" onClick={() => addFeature(newFeature)}>+</button>
+          <button id='addFeatureBtn' type="button" data-testid='addFeatureBtn' onClick={() => addFeature(newFeature)}>+</button>
           {features.length > 0 && (
             <ul className='roomFeatureList'>
               {features.map((feature, index) => (
@@ -49,9 +49,9 @@ export default function AddRoom({ rooms, setRooms }) {
         </div>
         <div>
           <label>Set price / night (€): </label>
-          <input type='text' name='url' value={price} placeholder='Give Price...' onChange={({ target }) => setPrice(target.value)}/>
+          <input type='text' name='url' value={price} placeholder='Give price...' onChange={({ target }) => setPrice(target.value)}/>
         </div>
-        <button id='addRoomBtn' type='submit'>Add Room</button>
+        <button id='addRoomBtn' type='submit' data-testid='addRoomBtn'>Add Room</button>
       </form>
   )
 }
