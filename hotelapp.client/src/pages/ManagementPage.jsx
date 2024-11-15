@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import AddRoom from "../components/rooms/AddRoom";
+import { AddRoom } from "../components/rooms/AddRoom";
 import { RoomsList } from "../components/rooms/RoomsList";
 import roomService from "../services/rooms";
 
