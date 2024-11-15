@@ -18,6 +18,11 @@ build:
     - dotnet build HotelApp.Server/HotelApp.Server.csproj
     - cd hotelapp.client
     - npm run build
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      allow_failure: false
+    - if: '$CI_COMMIT_BRANCH != "main"'
+      allow_failure: true
 
 test:
   stage: test
@@ -25,3 +30,8 @@ test:
     - dotnet test HotelApp.Server.Tests/HotelApp.Server.Tests.csproj
     - cd hotelapp.client
     - npx vitest run -- --watch=false
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      allow_failure: false
+    - if: '$CI_COMMIT_BRANCH != "main"'
+      allow_failure: true
