@@ -106,3 +106,16 @@ Phases:
   1st phase:
     -Designing the backend structure
     -OOAD
+
+## Docker
+Running entire app with Docker, build and then run with port-mapping and env-option (.env file with DB connection string must be present in project root):
+```console
+docker build -t hotelapp .
+docker run --name HotelApp -p 5000:80 --env-file .env hotelapp
+```
+App is running on localhost:5000.
+
+## Render
+Application deployed on Render: https://devops-hotelapp.onrender.com/
+App runs on Render with a single Docker image located in Docker Hub.
+(App is still critically in development-phase but for the purposes of the course and its tight schedule, testing the deployment was necessary)
