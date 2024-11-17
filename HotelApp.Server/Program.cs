@@ -12,7 +12,8 @@ namespace HotelApp.Server
 
             var connectionURI = System.Environment.GetEnvironmentVariable("MONGODB_URI");
 
-            if (string.IsNullOrEmpty(connectionURI)) {
+            if (string.IsNullOrEmpty(connectionURI))
+            {
                 throw new Exception("Connection string not found.");
             }
 
@@ -41,17 +42,21 @@ namespace HotelApp.Server
                     });
             });
 
-            var app = builder.Build();
-
             //For running app locally with dotnet, not Docker
-            if (app.Environment.IsDevelopment())
+            if (builder.Environment.IsDevelopment())
             {
                 builder.WebHost.UseUrls("http://localhost:5000");
             }
 
+            var app = builder.Build();
+
+            app.UseStaticFiles();
+
             app.UseCors(MyAllowSpecificOrigins);
 
             app.MapControllers();
+
+            app.MapFallbackToFile("index.html");
 
             app.Run();
         }
