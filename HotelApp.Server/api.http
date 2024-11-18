@@ -3,12 +3,29 @@
 GET http://localhost:5000/api/rooms/
 
 ###
+GET http://localhost:5000/api/users
+Accept: application/json
+
+###
 POST http://localhost:5000/api/rooms
 Content-Type: application/json
 
 {
   "location": "PostTest",
+  "category": "Testcategory",
   "features": ["postestfeature", "postestfeature2"],
   "isAvailable": true,
   "price": 100
+}
+
+### Create New User
+POST http://localhost:5000/api/users
+Content-Type: application/json
+
+{
+  "userName": "TestAdmin2",
+  "passwordHash": "testadminpassword",
+  "email": "testadmin2@example.com",
+  "phoneNumber": "test20451200321",
+  "isAdmin": true
 }

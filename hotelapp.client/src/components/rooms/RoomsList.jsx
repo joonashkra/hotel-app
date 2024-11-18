@@ -17,7 +17,7 @@ export const RoomsList = ({ rooms, setRooms }) => {
         });
     };
 
-    if (!rooms) return <div className="loading">Loading...</div>;
+    if (!Array.isArray(rooms)) return <div className="loading">Loading...</div>;
 
     return (
         <ul className="roomList" data-testid='roomList'>

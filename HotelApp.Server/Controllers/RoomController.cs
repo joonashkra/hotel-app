@@ -10,7 +10,8 @@ namespace HotelApp.Server.Controllers;
 [ApiController]
 [Route("api/rooms")]
 
-public class RoomController : ControllerBase {
+public class RoomController : ControllerBase 
+{
     private readonly RoomService _roomService;
 
     public RoomController(RoomService roomService) =>
@@ -80,12 +81,13 @@ public class RoomController : ControllerBase {
         
         if (targetRoom == null)
         {
-            return NotFound("Couldn't find a room with the same ID, no changes made");
+            return NotFound($"Couldn't find a room with the same ID, no changes made");
         }
 
         var updatedRoomModel = new Room
         {
             Id = id,
+            Category = updatedRoom.Category,
             Location = updatedRoom.Location,
             Features = updatedRoom.Features,
             IsAvailable = updatedRoom.IsAvailable,
@@ -105,7 +107,7 @@ public class RoomController : ControllerBase {
 
         if (targetRoom == null)
         {
-            return NotFound("Couldn't find a room with the same ID, nothing removed");
+            return NotFound($"Couldn't find a room with the same ID, nothing removed");
         }
 
         bool deletionSuccessful = await _roomService.DeleteRoomAsync(id);
@@ -117,7 +119,7 @@ public class RoomController : ControllerBase {
 
         else
         {
-            return StatusCode(500, "An error occurred while deleting the room");
+            return StatusCode(500, $"An error occurred while deleting the room");
         }
     }
 }

@@ -27,6 +27,7 @@ namespace HotelApp.Server.Tests.Rooms
             var newRoom = new CreateRoomDto
             {
                 Location = "TestNewLocation",
+                Category =  "TestCategory",
                 Features = testfeatures,
                 IsAvailable = true,
                 Price = 100

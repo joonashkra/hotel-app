@@ -11,12 +11,13 @@ public class RoomService {
 
     private readonly IMongoCollection<Room> _roomsCollection;
 
-    public RoomService(IOptions<HotelAppDatabaseSettings> hotelAppDatabaseSettings) {
+    public RoomService(IOptions<HotelAppDatabaseSettings> hotelAppDatabaseSettings) 
+    {
         var mongoClient = new MongoClient(hotelAppDatabaseSettings.Value.ConnectionURI);
 
         var mongoDatabase = mongoClient.GetDatabase(hotelAppDatabaseSettings.Value.DatabaseName);
 
-        _roomsCollection = mongoDatabase.GetCollection<Room>(hotelAppDatabaseSettings.Value.CollectionName);
+        _roomsCollection = mongoDatabase.GetCollection<Room>(hotelAppDatabaseSettings.Value.RoomsCollectionName);
     }
 
     public async Task<List<Room>> GetRoomsAsync() =>

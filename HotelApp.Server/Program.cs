@@ -20,13 +20,17 @@ namespace HotelApp.Server
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Configuration.AddInMemoryCollection(new Dictionary<string, string>
-            { {"HotelAppDatabase:ConnectionURI", connectionURI }
+            { 
+                {"HotelAppDatabase:ConnectionURI", connectionURI }
             });
 
-            builder.Services.Configure<HotelAppDatabaseSettings>(
-                builder.Configuration.GetSection("HotelAppDatabase"));
+            builder.Services.Configure<HotelAppDatabaseSettings>
+            (
+                builder.Configuration.GetSection("HotelAppDatabase")
+            );
 
             builder.Services.AddSingleton<RoomService>();
+            builder.Services.AddSingleton<UserService>();
             builder.Services.AddControllers();
 
             var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
