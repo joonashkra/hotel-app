@@ -1,28 +1,19 @@
-using HotelApp.Server.Tests.Abstractions;
 using HotelApp.Server.Models;
-using System.Net.Http;
-using Xunit;
 using System.Net.Http.Json;
+using HotelApp.Server.Tests.Abstractions;
 
 namespace HotelApp.Server.Tests.Rooms
 {
-    public class GetRoomTests : IClassFixture<FunctionalTestWebAppFactory>
+    public class GetRoomTests : BaseFunctionalTest
     {
-        private readonly HttpClient _httpClient;
-
-        public GetRoomTests(FunctionalTestWebAppFactory factory)
-        {
-            _httpClient = factory.CreateClient();
-        }
+        public GetRoomTests(FunctionalTestWebAppFactory factory) : base(factory) { }
 
         [Fact]
         public async Task Should_ReturnRooms()
         {
-            HttpResponseMessage response = await _httpClient.GetAsync("api/rooms");
+            HttpResponseMessage response = await HttpClient.GetAsync("api/rooms");
 
             response.EnsureSuccessStatusCode();
-
-            string responseBody = await response.Content.ReadAsStringAsync();
 
             var rooms = await response.Content.ReadFromJsonAsync<List<Room>>();
 
@@ -30,5 +21,17 @@ namespace HotelApp.Server.Tests.Rooms
             Assert.NotEmpty(rooms);
         }
 
+        [Fact]
+        public async Task Should_ReturnRoomsByLocation()
+        {
+            HttpResponseMessage response = await HttpClient.GetAsync("api/rooms/Location/TestLocation");
+
+            response.EnsureSuccessStatusCode();
+
+            var rooms = await response.Content.ReadFromJsonAsync<List<Room>>();
+
+            Assert.NotNull(rooms);
+            Assert.NotEmpty(rooms);
+        }
     }
 }

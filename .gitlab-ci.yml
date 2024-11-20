@@ -1,37 +1,42 @@
 image: mcr.microsoft.com/dotnet/sdk:6.0 
 
 stages:          
-  - build
-  - test
+  - build-server
+  - test-server
+  - build-client
+  - test-client
 
 before_script:
   - curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
   - apt-get install -y nodejs
   - dotnet restore HotelApp.Server/HotelApp.Server.csproj
-  - cd hotelapp.client
-  - npm install
-  - cd ..
 
-build:
-  stage: build
+build-server:
+  stage: build-server
   script:
     - dotnet build HotelApp.Server/HotelApp.Server.csproj
-    - cd hotelapp.client
-    - npm run build
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "main"'
-      allow_failure: false
-    - if: '$CI_COMMIT_BRANCH != "main"'
-      allow_failure: true
 
-test:
-  stage: test
+test-server:
+  stage: test-server
   script:
     - dotnet test HotelApp.Server.Tests/HotelApp.Server.Tests.csproj
+  retry:
+      max: 2
+      when: script_failure
+
+build-client:
+  stage: build-client
+  script:
     - cd hotelapp.client
+    - npm install
+    - npm run build
+
+test-client:
+  stage: test-client
+  script:
+    - cd hotelapp.client
+    - npm install
     - npx vitest run -- --watch=false
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "main"'
-      allow_failure: false
-    - if: '$CI_COMMIT_BRANCH != "main"'
-      allow_failure: true
+  retry:
+    max: 2
+    when: always
