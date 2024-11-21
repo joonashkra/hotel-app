@@ -33,13 +33,15 @@ test('adds room', async () => {
 
     const locationInput = screen.getByPlaceholderText('Type location...')
     const featureInput = screen.getByPlaceholderText('Type new feature...')
-    const priceInput = screen.getByPlaceholderText('Give price...')
+    const priceInput = screen.getByPlaceholderText('Type price...')
+    const categoryInput = screen.getByPlaceholderText('Type category...')
     const addRoomBtn = screen.getByTestId('addRoomBtn')
     const addFeatureBtn = screen.getByTestId('addFeatureBtn')
 
     fireEvent.change(locationInput, { target: { value: 'testLocation' } })
     fireEvent.change(featureInput, { target: { value: 'testFeature' } })
     fireEvent.click(addFeatureBtn)
+    fireEvent.change(categoryInput, { target: { value: 'testCategory' } })
     fireEvent.change(priceInput, { target: { value: '123' } })
     fireEvent.click(addRoomBtn)
 
@@ -47,6 +49,7 @@ test('adds room', async () => {
     expect(setRooms).toHaveBeenCalled()
     expect(roomService.create).toHaveBeenCalledWith({
         location: 'testLocation',
+        category: 'testCategory',
         features: ['testFeature'],
         price: '123',
         isAvailable: true,
