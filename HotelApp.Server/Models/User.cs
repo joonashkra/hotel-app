@@ -16,7 +16,7 @@ public class User
     public string? Email { get; set; }
 
     [BsonElement("passwordHash")]
-    public string PasswordHash { get; set; }
+    public string? PasswordHash { get; set; }
 
     [BsonElement("phoneNumber")]
     public string? PhoneNumber { get; set; }

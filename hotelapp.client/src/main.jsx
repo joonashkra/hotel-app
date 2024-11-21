@@ -9,29 +9,46 @@ import {
 } from "react-router-dom";
 import Room from './components/rooms/Room.jsx';
 import NavBarWrapper from './components/general/NavBarWrapper'
+import UpdateRoom from './components/rooms/UpdateRoom.jsx';
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <NavBarWrapper />,
+      children: [
+        {
+          path: '/',
+          element: (<HomePage />)
+        },
+        {
+          path: "/rooms/:id",
+          element: <Room />
+        },
+        {
+          path: '/management',
+          element: (<ManagementPage />)
+        },
+        {
+          path: '/management/rooms/:id',
+          element: (<UpdateRoom />)
+        },
+      ],
+    },
+  ],
   {
-    path: "/",
-    element: <NavBarWrapper />,
-    children: [
-      {
-        path: '/',
-        element: (<HomePage />)
-      },
-      {
-        path: "/rooms/:id",
-        element: <Room />
-      },
-      {
-        path: '/management',
-        element: (<ManagementPage />)
-      },
-    ],
-  },
-]);
+    future: {
+      v7_fetcherPersist: true,
+      v7_normalizeFormMethod: true,
+      v7_partialHydration: true,
+      v7_relativeSplatPath: true,
+      v7_skipActionErrorRevalidation: true,
+      v7_startTransition: true,
+    }
+  }
+);
 
 
 createRoot(document.getElementById('root')).render(
-  <RouterProvider router={router} />
+  <RouterProvider router={router} future={{ v7_startTransition: true }} />
 )

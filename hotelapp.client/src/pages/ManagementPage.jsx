@@ -12,16 +12,16 @@ export default function ManagementPage() {
   }, []);
 
   return (
-    <div className='manageRooms'>
-      <h1>Manage rooms</h1>
+    <div className='manageRoomsPage'>
+      <h1>Management</h1>
       <div className="manageRoomsContent">
-        <div>
-          <h2>Add New Room</h2>
-          <AddRoom rooms={rooms} setRooms={setRooms} />
-        </div>
         <div>
           <h2>Update & Delete existing rooms</h2>
           <RoomsList rooms={rooms} setRooms={setRooms} />
+        </div>
+        <div>
+          <h2>Add New Room</h2>
+          <AddRoom rooms={rooms} setRooms={setRooms} />
         </div>
       </div>
     </div>

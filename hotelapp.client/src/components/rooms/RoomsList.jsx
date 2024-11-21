@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import roomService from "../../services/rooms";
 
 export const RoomsList = ({ rooms, setRooms }) => {
     const [isManagement, setIsManagement] = useState(false);
+    const navigate = useNavigate();
     
     useEffect(() => {
         if (window.location.href.includes('management')) {
@@ -23,15 +24,18 @@ export const RoomsList = ({ rooms, setRooms }) => {
         <ul className="roomList" data-testid='roomList'>
             {rooms.map((room) => (
                 <div key={room.id} style={{ display: "flex" }}>
-                    <Link to={`rooms/${room.id}`}>
-                        <li className="roomListItem">
-                            <p>Location: {room.location}</p>
-                            <p>Price: {room.price}€</p>
-                            <p>{room.isAvailable ? "Available" : "Booked"}</p>
+                    <Link to={`/rooms/${room.id}`}>
+                        <li className="roomItem">
+                            <p>{room.location}</p>
+                            <p>{room.price}€</p>
+                            <p>{room.category}</p>
                         </li>
                     </Link>
                     {isManagement && (
-                        <button onClick={() => deleteRoom(room.id)} style={{ backgroundColor: "red", border: "1px solid white", borderRadius: "0" }}>Delete</button>
+                        <div className="managementActions">
+                            <button onClick={() => navigate(`rooms/${room.id}`)} style={{ backgroundColor: "gray" }}>Update</button>
+                            <button onClick={() => deleteRoom(room.id)} style={{ backgroundColor: "red" }}>Delete</button>
+                        </div>
                     )}
                 </div>
             ))}

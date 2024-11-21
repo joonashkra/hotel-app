@@ -14,8 +14,11 @@ export default function App() {
 
     return (
         <div className='homePage'>
-            <h1>Rooms</h1>
-            <RoomsList rooms={rooms} setRooms={rooms} />
+            <h1>Home</h1>
+            <div className='homePageContent'>
+                <h2>Rooms</h2>
+                <RoomsList rooms={rooms} setRooms={rooms} />
+            </div>
         </div>
     );
 }

@@ -8,14 +8,16 @@ export const AddRoom = ({ rooms, setRooms }) => {
     const [newFeature, setNewFeature] = useState('')
     const [features, setFeatures] = useState([])
     const [price, setPrice] = useState('')
+    const [category, setCategory] = useState('')
 
     const addRoom = async (event) => {
         event.preventDefault()
-        const newRoom = { location, features, price, isAvailable: true }
+        const newRoom = { location, category, features, price, isAvailable: true }
         const createdRoom = await roomService.create(newRoom)
         setLocation('')
         setFeatures([])
         setPrice(0)
+        setCategory('')
         setRooms(rooms.concat(createdRoom))
     }
 
@@ -30,11 +32,11 @@ export const AddRoom = ({ rooms, setRooms }) => {
     <form onSubmit={addRoom} className='createRoomForm'>
         <div>
           <label>Set location: </label>
-          <input type='text' name='title' value={location} placeholder='Type location...' onChange={({ target }) => setLocation(target.value)}/>
+          <input type='text' name='location' value={location} placeholder='Type location...' onChange={({ target }) => setLocation(target.value)}/>
         </div>
         <div className='featuresInput'>
           <label>Add room features: </label>
-          <input type='text' name='author' value={newFeature} placeholder='Type new feature...' onChange={({ target }) => setNewFeature(target.value)}/>
+          <input type='text' name='feature' value={newFeature} placeholder='Type new feature...' onChange={({ target }) => setNewFeature(target.value)}/>
           <button id='addFeatureBtn' type="button" data-testid='addFeatureBtn' onClick={() => addFeature(newFeature)}>+</button>
           {features.length > 0 && (
             <ul className='roomFeatureList'>
@@ -48,8 +50,12 @@ export const AddRoom = ({ rooms, setRooms }) => {
           )}
         </div>
         <div>
+          <label>Give room category: </label>
+          <input type='text' name='category' value={category} placeholder='Type category...' onChange={({ target }) => setCategory(target.value)}/>
+        </div>
+        <div>
           <label>Set price / night (€): </label>
-          <input type='text' name='url' value={price} placeholder='Give price...' onChange={({ target }) => setPrice(target.value)}/>
+          <input type='text' name='price' value={price} placeholder='Type price...' onChange={({ target }) => setPrice(target.value)}/>
         </div>
         <button id='addRoomBtn' type='submit' data-testid='addRoomBtn'>Add Room</button>
       </form>

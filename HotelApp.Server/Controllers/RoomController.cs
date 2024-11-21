@@ -2,8 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using HotelApp.Server.Services;
 using HotelApp.Server.Models;
 using HotelApp.Server.Dtos;
-using ZstdSharp.Unsafe;
-using MongoDB.Bson;
 
 namespace HotelApp.Server.Controllers;
 
@@ -13,9 +11,12 @@ namespace HotelApp.Server.Controllers;
 public class RoomController : ControllerBase 
 {
     private readonly RoomService _roomService;
+    private readonly ILogger<RoomController> _logger;
 
-    public RoomController(RoomService roomService) =>
+    public RoomController(RoomService roomService, ILogger<RoomController> logger) {
         _roomService = roomService;
+        _logger = logger;
+    }
 
     [HttpGet]
     public async Task<ActionResult<List<Room>>> Get()
@@ -63,9 +64,10 @@ public class RoomController : ControllerBase
         var newRoom = new Room
         {
             Location = newRoomDto.Location,
+            Category = newRoomDto.Category,
             Features = newRoomDto.Features,
             IsAvailable = newRoomDto.IsAvailable,
-            Price = newRoomDto.Price
+            Price = newRoomDto.Price,
         };
 
         await _roomService.PostRoomAsync(newRoom);

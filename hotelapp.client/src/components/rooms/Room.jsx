@@ -27,7 +27,7 @@ export default function Room() {
               <li key={index}>{feature}</li>
           ))}
         </ul>
-        <p>Available: {room.isAvailable ? "Yes" : "No"}</p>
+        <p>Category: {room.category}</p>
         <p>Price: {room.price}€ / night</p>
       </div>
     </div>
