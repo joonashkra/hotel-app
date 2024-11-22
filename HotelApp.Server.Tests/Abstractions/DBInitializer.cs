@@ -51,7 +51,6 @@ namespace HotelApp.Server.Tests.Abstractions
                 {
                     return;
                 }
-                await Task.Delay(1000);
             }
 
             throw new Exception("Rooms collection initialization failed.");
@@ -90,7 +89,6 @@ namespace HotelApp.Server.Tests.Abstractions
                 {
                     return;
                 }
-                await Task.Delay(1000);
             }
 
             throw new Exception("Users collection initialization failed.");
@@ -133,10 +131,21 @@ namespace HotelApp.Server.Tests.Abstractions
                 {
                     return;
                 }
-                await Task.Delay(1000);
             }
 
             throw new Exception("Bookings collection initialization failed.");
+        }
+
+        public async Task ClearDB()
+        {
+            var collection = _database.GetCollection<BsonDocument>(_roomsCollectionName);
+            await collection.DeleteManyAsync(FilterDefinition<BsonDocument>.Empty);
+
+            var usersCollection = _database.GetCollection<BsonDocument>(_usersCollectionName);
+            await usersCollection.DeleteManyAsync(FilterDefinition<BsonDocument>.Empty);
+
+            var bookingsCollection = _database.GetCollection<BsonDocument>(_bookingsCollectionName);
+            await bookingsCollection.DeleteManyAsync(FilterDefinition<BsonDocument>.Empty);
         }
     }
 }

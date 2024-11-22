@@ -1,11 +1,6 @@
 ﻿using HotelApp.Server.Models;
 using HotelApp.Server.Tests.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http.Json;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HotelApp.Server.Tests.Bookings;
 
@@ -18,6 +13,8 @@ public class GetBookingsTest : BaseFunctionalTest
     {
         HttpResponseMessage response = await HttpClient.GetAsync("api/bookings");
 
+        await Task.Delay(500);
+
         response.EnsureSuccessStatusCode();
 
         var bookings = await response.Content.ReadFromJsonAsync<List<Booking>>();
@@ -26,4 +23,3 @@ public class GetBookingsTest : BaseFunctionalTest
         Assert.NotEmpty(bookings);
     }
 }
-

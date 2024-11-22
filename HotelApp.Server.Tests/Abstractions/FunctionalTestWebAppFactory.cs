@@ -1,11 +1,8 @@
-
 using HotelApp.Server.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
-using MongoDB.Bson;
-using MongoDB.Driver;
 
 namespace HotelApp.Server.Tests.Abstractions
 {
@@ -75,14 +72,10 @@ namespace HotelApp.Server.Tests.Abstractions
 
         public async new Task DisposeAsync()
         {
-            var _client = new MongoClient(_connectionURI);
-            var _database = _client.GetDatabase(_databaseName);
-            var collection = _database.GetCollection<BsonDocument>(_roomsCollectionName);
-            await collection.DeleteManyAsync(FilterDefinition<BsonDocument>.Empty);
-            var usersCollection = _database.GetCollection<BsonDocument>(_usersCollectionName);
-            await usersCollection.DeleteManyAsync(FilterDefinition<BsonDocument>.Empty);
-            var bookingsCollection = _database.GetCollection<BsonDocument>(_bookingsCollectionName);
-            await bookingsCollection.DeleteManyAsync(FilterDefinition<BsonDocument>.Empty);
+            if(_dbInitializer != null)
+            {
+                await _dbInitializer.ClearDB();
+            }
         }
     }
 }

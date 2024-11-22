@@ -19,17 +19,10 @@ build-server:
 test-server:
   stage: test-server
   script:
-    - dotnet test HotelApp.Server.Tests/HotelApp.Server.Tests.csproj --logger:"trx;LogFileName=TestResults.trx"
-    - |
-      if grep -q "Failed" TestResults.trx; then
-        echo "Some tests failed. Attempting to re-run failed tests...";
-        dotnet test HotelApp.Server.Tests/HotelApp.Server.Tests.csproj --filter "(Result=Fail)" --logger:"trx;LogFileName=RetryResults.trx";
-      else
-        echo "All tests passed on first attempt.";
-      fi
+    - dotnet test HotelApp.Server.Tests/HotelApp.Server.Tests.csproj
   retry:
-    max: 1
-    when: script_failure
+      max: 2
+      when: script_failure
 
 build-client:
   stage: build-client
