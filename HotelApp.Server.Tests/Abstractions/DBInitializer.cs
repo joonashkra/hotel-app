@@ -102,12 +102,24 @@ namespace HotelApp.Server.Tests.Abstractions
 
             var sampleBooking = new BsonDocument
             {
+                { "RoomId", "123" },
                 { "Name", "Test" },
                 { "Email", "test@test.fi" },
-                { "Phonenumber", "045459422231" },
+                { "PhoneNumber", "045459422231" },
                 { "StartDate", "2025-10-10" },
                 { "EndDate", "2025-10-10" },
                 { "Comments", "Testcomment" }
+            };
+
+            var sampleBooking2 = new BsonDocument
+            {
+                { "RoomId", "234" },
+                { "Name", "Test2" },
+                { "Email", "test2@test.fi" },
+                { "PhoneNumber", "045459422231" },
+                { "StartDate", "2025-10-08" },
+                { "EndDate", "2025-10-12" },
+                { "Comments", "Testcomment2" }
             };
 
             var bookingsToInsert = new List<BsonDocument> { sampleBooking };

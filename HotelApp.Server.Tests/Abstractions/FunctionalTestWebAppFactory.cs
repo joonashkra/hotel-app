@@ -14,7 +14,7 @@ namespace HotelApp.Server.Tests.Abstractions
         private readonly string _databaseName = "hotelApp";
         private readonly string _roomsCollectionName = "roomsTest";
         private readonly string _usersCollectionName = "usersTest";
-        private readonly string _bookingsCollectionName = "bookingstest";
+        private readonly string _bookingsCollectionName = "bookingsTest";
         private readonly string? _connectionURI;
         private readonly DBInitializer? _dbInitializer;
 

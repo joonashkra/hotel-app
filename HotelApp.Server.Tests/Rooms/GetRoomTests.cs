@@ -2,7 +2,7 @@ using HotelApp.Server.Models;
 using System.Net.Http.Json;
 using HotelApp.Server.Tests.Abstractions;
 
-namespace HotelApp.Server.Tests.Bookings
+namespace HotelApp.Server.Tests.Rooms
 {
     public class GetRoomTests : BaseFunctionalTest
     {
