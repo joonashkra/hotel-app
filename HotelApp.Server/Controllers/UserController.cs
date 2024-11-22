@@ -25,6 +25,11 @@ public class UserController : ControllerBase
             return NotFound($"No users exist.");
         }
 
+        foreach (var user in users)
+        {
+            user.PasswordHash = null;
+        }
+
         return Ok(users);
     }
 

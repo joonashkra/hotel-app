@@ -23,9 +23,9 @@ POST http://localhost:5000/api/users
 Content-Type: application/json
 
 {
-  "userName": "TestAdmin2",
+  "userName": "TestAdmin",
   "passwordHash": "testadminpassword",
-  "email": "testadmin2@example.com",
+  "email": "testadmin@example.com",
   "phoneNumber": "test20451200321",
   "isAdmin": true
 }

@@ -8,14 +8,16 @@ namespace HotelApp.Server.Tests.Abstractions
         private readonly IMongoDatabase _database;
         private readonly string _roomsCollectionName;
         private readonly string _usersCollectionName;
+        private readonly string _bookingsCollectionName;
         private readonly MongoClient _client;
 
-        public DBInitializer(string connectionURI, string databaseName, string roomsCollectionName, string usersCollectionName)
+        public DBInitializer(string connectionURI, string databaseName, string roomsCollectionName, string usersCollectionName, string bookingsCollectionName)
         {
             _client = new MongoClient(connectionURI);
             _database = _client.GetDatabase(databaseName);
             _roomsCollectionName = roomsCollectionName;
             _usersCollectionName = usersCollectionName;
+            _bookingsCollectionName = bookingsCollectionName;
         }
 
         public async Task InsertSampleRooms()
@@ -92,6 +94,37 @@ namespace HotelApp.Server.Tests.Abstractions
             }
 
             throw new Exception("Users collection initialization failed.");
+        }
+
+        public async Task InsertSampleBookings()
+        {
+            var bookingsCollection = _database.GetCollection<BsonDocument>(_bookingsCollectionName);
+
+            var sampleBooking = new BsonDocument
+            {
+                { "Name", "Test" },
+                { "Email", "test@test.fi" },
+                { "Phonenumber", "045459422231" },
+                { "StartDate", "2025-10-10" },
+                { "EndDate", "2025-10-10" },
+                { "Comments", "Testcomment" }
+            };
+
+            var bookingsToInsert = new List<BsonDocument> { sampleBooking };
+            await bookingsCollection.InsertManyAsync(bookingsToInsert);
+
+            for (int attempt = 0; attempt < 10; attempt++)
+            {
+                var bookingsInDb = await bookingsCollection.Find(FilterDefinition<BsonDocument>.Empty).ToListAsync();
+
+                if (bookingsInDb.Any())
+                {
+                    return;
+                }
+                await Task.Delay(1000);
+            }
+
+            throw new Exception("Bookings collection initialization failed.");
         }
     }
 }

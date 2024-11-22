@@ -14,6 +14,7 @@ namespace HotelApp.Server.Tests.Abstractions
         private readonly string _databaseName = "hotelApp";
         private readonly string _roomsCollectionName = "roomsTest";
         private readonly string _usersCollectionName = "usersTest";
+        private readonly string _bookingsCollectionName = "bookingstest";
         private readonly string? _connectionURI;
         private readonly DBInitializer? _dbInitializer;
 
@@ -27,7 +28,8 @@ namespace HotelApp.Server.Tests.Abstractions
                     _connectionURI,
                     "hotelApp",
                     "roomsTest",
-                    "usersTest"
+                    "usersTest",
+                    "bookingsTest"
                 );
             }
         }
@@ -56,6 +58,7 @@ namespace HotelApp.Server.Tests.Abstractions
                     options.DatabaseName = _databaseName;
                     options.RoomsCollectionName = _roomsCollectionName;
                     options.UsersCollectionName = _usersCollectionName;
+                    options.BookingsCollectionName = _bookingsCollectionName;
                 });
             });
         }
@@ -66,6 +69,7 @@ namespace HotelApp.Server.Tests.Abstractions
             {
                 await _dbInitializer.InsertSampleRooms();
                 await _dbInitializer.InsertSampleUsers();
+                await _dbInitializer.InsertSampleBookings();
             }
         }
 
@@ -77,6 +81,8 @@ namespace HotelApp.Server.Tests.Abstractions
             await collection.DeleteManyAsync(FilterDefinition<BsonDocument>.Empty);
             var usersCollection = _database.GetCollection<BsonDocument>(_usersCollectionName);
             await usersCollection.DeleteManyAsync(FilterDefinition<BsonDocument>.Empty);
+            var bookingsCollection = _database.GetCollection<BsonDocument>(_bookingsCollectionName);
+            await bookingsCollection.DeleteManyAsync(FilterDefinition<BsonDocument>.Empty);
         }
     }
 }
