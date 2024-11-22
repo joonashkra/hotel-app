@@ -22,12 +22,6 @@ public class RoomController : ControllerBase
     public async Task<ActionResult<List<Room>>> Get()
     {
         var rooms = await _roomService.GetRoomsAsync();
-
-        if (rooms == null || rooms.Count == 0)
-        {
-            return NotFound($"No rooms found.");
-        }
-
         return Ok(rooms);
     }
 

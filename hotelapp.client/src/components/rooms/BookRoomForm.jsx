@@ -2,8 +2,6 @@ import { useState } from "react"
 import bookingService from '../../services/bookings'
 
 export default function BookRoomForm({ roomId }) {
-
-  const [bookings, setBookings] = useState([])
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [phoneNumber, setPhoneNumber] = useState('')
@@ -15,12 +13,9 @@ export default function BookRoomForm({ roomId }) {
     e.preventDefault()
 
     const newBooking = { roomId, name, email, phoneNumber, startDate, endDate, comments }
+    await bookingService.create(newBooking)
 
-    console.log('bookRoom:',  newBooking)
-
-    const response = await bookingService.create(newBooking)
-
-    console.log('bookRoomResponse:', response)
+    window.alert("Booked room succesfully!")
   }
 
   return (

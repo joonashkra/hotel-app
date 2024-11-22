@@ -6,7 +6,7 @@ import BookingList from "../components/rooms/BookingList";
 
 
 export default function ManagementPage() {
-  const [rooms, setRooms] = useState([]);
+  const [rooms, setRooms] = useState([{}]);
 
   useEffect(() => {
     roomService.getAll().then(rooms => setRooms(rooms));

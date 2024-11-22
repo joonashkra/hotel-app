@@ -22,12 +22,6 @@ public class BookingController : ControllerBase
     public async Task<ActionResult<List<Booking>>> Get()
     {
         var bookings = await _bookingService.GetBookingsAsync();
-
-        if (bookings == null || bookings.Count == 0)
-        {
-            return NotFound($"No rooms found.");
-        }
-
         return Ok(bookings);
     }
 

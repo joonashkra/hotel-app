@@ -19,12 +19,7 @@ public class UserController : ControllerBase
     public async Task<ActionResult<List<User>>> Get()
     {
         var users = await _userService.GetUsersAsync();
-
-        if (users == null || users.Count == 0)
-        {
-            return NotFound($"No users exist.");
-        }
-
+        
         foreach (var user in users)
         {
             user.PasswordHash = null;

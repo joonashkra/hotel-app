@@ -13,12 +13,26 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Content Remove="wwwroot\assets\index-CWp-f-a0.css" />
+	  <Content Remove="wwwroot\assets\index-Ng2zku1f.js" />
+	  <Content Remove="wwwroot\index.html" />
+	  <Content Remove="wwwroot\vite.svg" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Bcrypt.Net-Next" Version="4.0.3" />
 		<PackageReference Include="DotNetEnv" Version="3.1.1" />
 		<PackageReference Include="Microsoft.AspNetCore.SpaProxy" Version="6.*-*" />
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
 		<PackageReference Include="MongoDB.Driver" Version="3.0.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="wwwroot\assets\index-CWp-f-a0.css" />
+	  <None Include="wwwroot\assets\index-Ng2zku1f.js" />
+	  <None Include="wwwroot\index.html" />
+	  <None Include="wwwroot\vite.svg" />
 	</ItemGroup>
 
 </Project>

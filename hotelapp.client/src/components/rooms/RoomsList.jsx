@@ -20,6 +20,8 @@ export const RoomsList = ({ rooms, setRooms }) => {
 
     if (!Array.isArray(rooms)) return <div className="loading">Loading...</div>;
 
+    if(rooms.length < 1) return <p>No rooms yet.</p>
+
     return (
         <ul className="itemList" data-testid='roomList'>
             {rooms.map((room) => (
