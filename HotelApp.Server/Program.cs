@@ -31,6 +31,7 @@ namespace HotelApp.Server
 
             builder.Services.AddSingleton<RoomService>();
             builder.Services.AddSingleton<UserService>();
+            builder.Services.AddSingleton<BookingService>();
             builder.Services.AddControllers();
 
             var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";

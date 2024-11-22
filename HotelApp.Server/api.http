@@ -29,3 +29,16 @@ Content-Type: application/json
   "phoneNumber": "test20451200321",
   "isAdmin": true
 }
+
+###
+POST http://localhost:5000/api/bookings
+Content-Type: application/json
+
+{
+  "Name": "TestAdmin2",
+  "Email": "testadminpassword",
+  "PhoneNumber": "testadmin2@example.com",
+  "StartDate": "2025-11-11",
+  "EndDate": "2025-11-12",
+  "Comments": "Testcomment"
+}

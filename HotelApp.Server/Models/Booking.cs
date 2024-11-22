@@ -9,17 +9,17 @@ public class Booking
     [BsonRepresentation(BsonType.ObjectId)]
     public string? Id { get; set; }
 
+    public string? RoomId { get; set; }
+
     public string Name { get; set; } = null!;
 
     public string Email { get; set; } = null!;
 
     public string PhoneNumber { get; set; } = null!;
 
-    public string BookedCategory { get; set; } = null!;
+    public string StartDate { get; set; }
 
-    public DateTime StartDate { get; set; }
-
-    public DateTime EndDate { get; set; }
+    public string EndDate { get; set; }
 
     public string? Comments { get; set; }
 }
