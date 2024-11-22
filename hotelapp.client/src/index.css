@@ -49,19 +49,6 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
-
 #root {
   margin: 0;
 }
@@ -103,7 +90,7 @@ button:focus-visible {
   padding: 0 2rem;
 }
 
-.roomList {
+.itemList {
   display: flex;
   flex-direction: column;
   gap: 2vh;
@@ -112,7 +99,7 @@ button:focus-visible {
   padding-inline-start: 0;
 }
 
-.roomItem {
+.listItem {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
@@ -123,8 +110,10 @@ button:focus-visible {
   color: white;
 }
 
-.room {
-  padding: 0 2rem;
+.roomPage {
+  margin: 2rem;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .roomDetails {
@@ -207,4 +196,42 @@ button:focus-visible {
   flex-direction: column;
   justify-content: space-between;
   padding: 0 1rem;
+}
+
+.bookRoomForm {
+  display: flex;
+  flex-direction: column;
+  gap: 4vh;
+  width: min-content;
+  background-color: black;
+  padding: 2rem;
+}
+
+.bookingList {
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+  width: max-content;
+  list-style: none;
+  padding-inline-start: 0;
+}
+
+.bookingItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 4rem;
+  border: 1px solid white;
+  background-color: black;
+  padding: 1rem;
+  color: white;
+  width: max-content;
+}
+
+.bookingItem:hover .bookingExtras {
+  display: block;
+}
+
+.bookingExtras {
+  display: none;
 }

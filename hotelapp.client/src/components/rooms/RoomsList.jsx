@@ -21,11 +21,11 @@ export const RoomsList = ({ rooms, setRooms }) => {
     if (!Array.isArray(rooms)) return <div className="loading">Loading...</div>;
 
     return (
-        <ul className="roomList" data-testid='roomList'>
+        <ul className="itemList" data-testid='roomList'>
             {rooms.map((room) => (
                 <div key={room.id} style={{ display: "flex" }}>
                     <Link to={`/rooms/${room.id}`}>
-                        <li className="roomItem">
+                        <li className="listItem">
                             <p>{room.location}</p>
                             <p>{room.price}€</p>
                             <p>{room.category}</p>

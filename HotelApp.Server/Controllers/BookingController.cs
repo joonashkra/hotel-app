@@ -36,6 +36,7 @@ public class BookingController : ControllerBase
     {
         var newBooking = new Booking
         {
+            RoomId = newRoomDto.RoomId,
             Name = newRoomDto.Name,
             Email = newRoomDto.Email,
             PhoneNumber = newRoomDto.PhoneNumber,
