@@ -11,5 +11,6 @@ public class BookingDto
     public string StartDate { get; set; }
     public string EndDate { get; set; }
     public string? Comments { get; set; }
+    public string RoomId { get; set; }
 }
 
