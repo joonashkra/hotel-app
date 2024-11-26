@@ -1,24 +1,15 @@
-import { useEffect, useState } from "react"
-import bookingService from '../../services/bookings'
 
-export default function BookingList() {
 
-    const [bookings, setBookings] = useState([{}])
-    
-    useEffect(() => {
-        bookingService.getAll().then(data => setBookings(data))
-    }, [])
-
-    console.log(bookings)
+export default function BookingList({ bookings }) {
 
     if (!Array.isArray(bookings)) return <div className="loading">Loading...</div>;
 
-    if(bookings.length < 1) return <p>No bookings yet.</p>
+    if(bookings.length < 1) return <p>No rooms yet.</p>
     
     return (
         <ul className="bookingList">
-            {bookings.map(booking => (
-                <li className="bookingItem" key={booking.id}>
+            {bookings.map((booking, index) => (
+                <li className="bookingItem" key={index}>
                     <div className="bookingBasicInfo">
                         <p>Room ID: {booking.roomId}</p>
                         <p>From {booking.startDate} to {booking.endDate}</p>

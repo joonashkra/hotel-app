@@ -27,10 +27,13 @@ export const RoomsList = ({ rooms, setRooms }) => {
             {rooms.map((room) => (
                 <div key={room.id} style={{ display: "flex" }}>
                     <Link to={`/rooms/${room.id}`}>
-                        <li className="listItem">
-                            <p>{room.location}</p>
-                            <p>{room.price}€</p>
-                            <p>{room.category}</p>
+                        <li className="roomListItem">
+                            <p>Room no. {room.id}</p>
+                            <div className="roomListDetails">
+                                <p>Location: {room.location}</p>
+                                <p>Price / Night: {room.price}€</p>
+                                <p>Category: {room.category}</p>
+                            </div>
                         </li>
                     </Link>
                     {isManagement && (

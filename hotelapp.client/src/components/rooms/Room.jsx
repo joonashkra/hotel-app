@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import roomService from "../../services/rooms";
-import BookRoomForm from "./BookRoomForm";
-
+import BookRoomForm from "../bookings/BookRoomForm";
 
 export default function Room() {
 

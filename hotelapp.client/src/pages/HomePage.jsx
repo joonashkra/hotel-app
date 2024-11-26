@@ -1,8 +1,7 @@
 
 import { useEffect, useState } from 'react';
 import { RoomsList } from '../components/rooms/RoomsList';
-import roomService from '../services/rooms';
-
+import roomService from '../services/rooms'
 
 export default function App() {
 

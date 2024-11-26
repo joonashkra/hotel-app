@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = '/api/bookings'
+const baseUrl = '/api/users'
 
 let authToken
 
@@ -7,27 +7,22 @@ const setToken = newToken => {
   authToken = `Bearer ${newToken}`
 }
 
-const getAll = async () => {
-    const config = {
-        headers: { Authorization: authToken }
-    }
-
+const login = async credentials => {
     try {
-        const response = await axios.get(baseUrl, config)
+        const response = await axios.post(`${baseUrl}/login`, credentials)
         return response.data
-    } 
-    catch (error) {
+    } catch (error) {
         return error
     }
 }
 
-const create = async newBooking => {
+const create = async newUser => {
     const config = {
         headers: { Authorization: authToken }
     }
 
     try {
-        const response = await axios.post(baseUrl, newBooking, config)
+        const response = await axios.post(baseUrl, newUser, config)
         return response.data
     } 
     catch (error) {
@@ -36,6 +31,7 @@ const create = async newBooking => {
 }
 
 const remove = async id => {
+
     const config = {
         headers: { Authorization: authToken }
     }
@@ -49,4 +45,4 @@ const remove = async id => {
     }
 }
 
-export default { getAll, create, remove, setToken }
+export default { create, remove, login, setToken }

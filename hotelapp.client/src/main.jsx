@@ -8,14 +8,16 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Room from './components/rooms/Room.jsx';
-import NavBarWrapper from './components/general/NavBarWrapper'
+import Wrapper from './components/general/Wrapper.jsx'
 import UpdateRoom from './components/rooms/UpdateRoom.jsx';
+import LoginPage from './pages/LoginPage.jsx';
+import ProtectedRoute from './components/general/ProtectedRoute.jsx';
 
 const router = createBrowserRouter(
   [
     {
       path: "/",
-      element: <NavBarWrapper />,
+      element: <Wrapper />,
       children: [
         {
           path: '/',
@@ -27,11 +29,15 @@ const router = createBrowserRouter(
         },
         {
           path: '/management',
-          element: (<ManagementPage />)
+          element: (<ProtectedRoute><ManagementPage /></ProtectedRoute>)
         },
         {
           path: '/management/rooms/:id',
-          element: (<UpdateRoom />)
+          element: (<ProtectedRoute><UpdateRoom /></ProtectedRoute>)
+        },
+        {
+          path: '/login',
+          element: (<LoginPage />)
         },
       ],
     },
