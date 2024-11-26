@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using HotelApp.Server.Services;
 using HotelApp.Server.Models;
 using HotelApp.Server.Dtos;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HotelApp.Server.Controllers;
 
@@ -24,7 +25,6 @@ public class RoomController : ControllerBase
         var rooms = await _roomService.GetRoomsAsync();
         return Ok(rooms);
     }
-
 
     [HttpGet("{id:length(24)}")]
     public async Task<ActionResult<Room>> Get(string id)
@@ -51,7 +51,8 @@ public class RoomController : ControllerBase
 
         return Ok(rooms);
     }
-        
+
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<ActionResult<Room>> Post([FromBody] CreateRoomDto newRoomDto)
     {
@@ -69,6 +70,7 @@ public class RoomController : ControllerBase
         return CreatedAtAction(nameof(Get), new { id = newRoom.Id }, newRoom);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPut("{id}")]
     public async Task<ActionResult> Put(string id, [FromBody] CreateRoomDto updatedRoom)
     {
@@ -95,6 +97,7 @@ public class RoomController : ControllerBase
         return NoContent();
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{id}")]
     public async Task<ActionResult> Delete(string id)
     {

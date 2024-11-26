@@ -1,6 +1,7 @@
 ﻿using HotelApp.Server.Dtos;
 using HotelApp.Server.Models;
 using HotelApp.Server.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelApp.Server.Controllers;
@@ -9,7 +10,6 @@ namespace HotelApp.Server.Controllers;
 [Route("api/bookings")]
 
 public class BookingController : ControllerBase
-
 {
     private readonly BookingService _bookingService;
 
@@ -18,6 +18,7 @@ public class BookingController : ControllerBase
         _bookingService = bookingService;
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpGet]
     public async Task<ActionResult<List<Booking>>> Get()
     {
@@ -26,17 +27,36 @@ public class BookingController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Booking>> Post([FromBody] BookingDto newRoomDto)
+    public async Task<ActionResult<Booking>> Post([FromBody] BookingDto newBookingDto)
     {
+        var bookings = await _bookingService.GetBookingsAsync();
+
+        //Varmistetaan, että ei oo samoille päiville huone varattuna jo
+        foreach (var booking in bookings)
+        {
+            if (newBookingDto.RoomId == booking.RoomId)
+            {
+                DateTime newBookingStartDate = DateTime.Parse(newBookingDto.StartDate);
+                DateTime newBookingEndDate = DateTime.Parse(newBookingDto.EndDate);
+                DateTime comparedBookingStartDate = DateTime.Parse(booking.StartDate);
+                DateTime comparedBookingEndDate = DateTime.Parse(booking.EndDate);
+
+                if (_bookingService.DatesConflict(newBookingStartDate, newBookingEndDate, comparedBookingStartDate, comparedBookingEndDate))
+                {
+                    return BadRequest($"Already existing booking for the room from" + newBookingDto.StartDate + " until " + newBookingDto.EndDate);
+                }
+            }
+        }
+
         var newBooking = new Booking
         {
-            RoomId = newRoomDto.RoomId,
-            Name = newRoomDto.Name,
-            Email = newRoomDto.Email,
-            PhoneNumber = newRoomDto.PhoneNumber,
-            StartDate = newRoomDto.StartDate,
-            EndDate = newRoomDto.EndDate,
-            Comments = newRoomDto.Comments,
+            RoomId = newBookingDto.RoomId,
+            Name = newBookingDto.Name,
+            Email = newBookingDto.Email,
+            PhoneNumber = newBookingDto.PhoneNumber,
+            StartDate = newBookingDto.StartDate,
+            EndDate = newBookingDto.EndDate,
+            Comments = newBookingDto.Comments,
         };
 
         await _bookingService.PostBookingAsync(newBooking);

@@ -1,6 +1,9 @@
 using HotelApp.Server.Services;
 using HotelApp.Server.Models;
 using System;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace HotelApp.Server
 {
@@ -11,10 +14,16 @@ namespace HotelApp.Server
             DotNetEnv.Env.TraversePath().Load();
 
             var connectionURI = System.Environment.GetEnvironmentVariable("MONGODB_URI");
+            var JWT_secretKey = System.Environment.GetEnvironmentVariable("JWT_SECRET_KEY");
 
             if (string.IsNullOrEmpty(connectionURI))
             {
                 throw new Exception("Connection string not found.");
+            }
+
+            if (string.IsNullOrEmpty(JWT_secretKey))
+            {
+                throw new Exception("Secret key for JWT not found.");
             }
 
             var builder = WebApplication.CreateBuilder(args);
@@ -47,6 +56,28 @@ namespace HotelApp.Server
                     });
             });
 
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                //sallii http jos on development ympäristössä, muutoin https
+                options.RequireHttpsMetadata = !builder.Environment.IsDevelopment();
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+                    ValidAudience = builder.Configuration["JwtSettings:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JWT_secretKey))
+                };
+            });
+
             //For running app locally with dotnet, not Docker
             if (builder.Environment.IsDevelopment())
             {
@@ -54,6 +85,16 @@ namespace HotelApp.Server
             }
 
             var app = builder.Build();
+
+            if (!builder.Environment.IsDevelopment())
+            {
+                //vaatii https production ympäristössä
+                app.UseHttpsRedirection();
+            }
+
+            app.UseAuthentication();
+
+            app.UseAuthorization();
 
             app.UseStaticFiles();
 

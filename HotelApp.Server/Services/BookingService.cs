@@ -23,5 +23,10 @@ public class BookingService
 
     public async Task PostBookingAsync(Booking newBooking) =>
         await _bookingsCollection.InsertOneAsync(newBooking);
+
+    public bool DatesConflict(DateTime startOfFirst, DateTime endOfFirst, DateTime startOfSecond, DateTime endOfSecond)
+    {
+        return !(startOfFirst <= startOfSecond || startOfFirst >= endOfSecond);
+    }
 }
 

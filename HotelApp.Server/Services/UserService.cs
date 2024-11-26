@@ -22,8 +22,32 @@ public class UserService
     public async Task<List<User>> GetUsersAsync() =>
         await _usersCollection.Find(_ => true).ToListAsync();
 
+    public async Task<User?> GetUserByUserNameAsync(string UserName)
+    {
+       return await _usersCollection.Find(user => user.UserName == UserName).FirstOrDefaultAsync();
+    }
+
     public async Task PostUserAsync(User newUser)
     {
         await _usersCollection.InsertOneAsync(newUser);
+    }
+
+    public async Task<User?> ValidateUserAsync(string UserName, string Password)
+    {
+        User expectedUser = await GetUserByUserNameAsync(UserName);
+
+        if (expectedUser == null)
+        {
+            return null;
+        }
+
+        bool isPasswordValid = BCrypt.Net.BCrypt.Verify(Password, expectedUser.PasswordHash);
+
+        if (!isPasswordValid)
+        {
+            return null;
+        }
+
+        return expectedUser;
     }
 }

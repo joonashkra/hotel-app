@@ -23,8 +23,8 @@ POST http://localhost:5000/api/users
 Content-Type: application/json
 
 {
-  "userName": "TestAdmin",
-  "passwordHash": "testadminpassword",
+  "userName": "Test",
+  "passwordHash": "Test",
   "email": "testadmin@example.com",
   "phoneNumber": "test20451200321",
   "isAdmin": true
@@ -42,4 +42,36 @@ Content-Type: application/json
   "StartDate": "2025-11-11",
   "EndDate": "2025-11-12",
   "Comments": "Testcomment"
+}
+###
+POST http://localhost:5000/api/users/login
+Content-Type: application/json
+
+{
+  "UserName": "Test",
+  "Password": "Test"
+}
+
+###
+POST http://localhost:5000/api/rooms
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiVGVzdCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiNjc0NWYzNWMwMDE2YTA3MTM2MDAyZGU1IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJleHAiOjE3MzI2NDEyMjAsImlzcyI6IkhvdGVsQXBwIiwiYXVkIjoiSG90ZWxBcHBVc2VycyJ9.wtVFtF86fXD8aDILu18Ez6dNO9lFV5RfAhxGvxF8rVU
+{
+  "location": "Room 102",
+  "category": "Twin",
+  "features": ["postestfeature", "postestfeature2"],
+  "IsAvailable": true,
+  "price": 120
+}
+
+###
+POST http://localhost:5000/api/rooms
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6sadsadHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiVGVzdCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiNjc0NWYzNWMwMDE2YTA3MTM2MDAyZGU1IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJleHAiOjE3MzI2NDEyMjAsImlzcyI6IkhvdGVsQXBwIiwiYXVkIjoiSG90ZWxBcHBVc2VycyJ9.wtVFtF86fXD8aDILu18Ez6dNO9lFV5RfAhxGvxF8rVU
+{
+  "location": "Room 102",
+  "category": "Singlel",
+  "features": ["postestfeature", "postestfeature2"],
+  "IsAvailable": true,
+  "price": 100
 }
