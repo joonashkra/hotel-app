@@ -14,7 +14,6 @@ public class RoomService {
     public RoomService(IOptions<HotelAppDatabaseSettings> hotelAppDatabaseSettings) 
     {
         var mongoClient = new MongoClient(hotelAppDatabaseSettings.Value.ConnectionURI);
-
         var mongoDatabase = mongoClient.GetDatabase(hotelAppDatabaseSettings.Value.DatabaseName);
 
         _roomsCollection = mongoDatabase.GetCollection<Room>(hotelAppDatabaseSettings.Value.RoomsCollectionName);
@@ -23,8 +22,8 @@ public class RoomService {
     public async Task<List<Room>> GetRoomsAsync() =>
         await _roomsCollection.Find(_ => true).ToListAsync();
 
-    public async Task<List<Room>> GetRoomsByLocationAsync(string Location) =>
-        await _roomsCollection.Find(room => room.Location == Location).ToListAsync();
+    public async Task<List<Room>> GetRoomsByLocationAsync(string location) =>
+        await _roomsCollection.Find(room => room.Location == location).ToListAsync();
 
     public async Task<Room?> GetRoomByIdAsync(string id)
     {

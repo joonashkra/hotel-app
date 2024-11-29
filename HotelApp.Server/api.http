@@ -18,16 +18,81 @@ Content-Type: application/json
   "price": 100
 }
 
-### Create New User
+### Create New Customer
 POST http://localhost:5000/api/users
 Content-Type: application/json
 
 {
-  "userName": "Test",
-  "passwordHash": "Test",
-  "email": "testadmin@example.com",
-  "phoneNumber": "test20451200321",
-  "isAdmin": true
+  "userName": "Customer2",
+  "passwordHash": "Customer2",
+  "email": "customer2@customer.com",
+  "phoneNumber": "0401",
+  "Role" : ""
+}
+
+### Create New Staff
+POST http://localhost:5000/api/users/staff
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiUmVjZXB0aW9uaXN0IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiI2NzQ5YzgwYzEwNDViMTNlNzMxMGYyNWYiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJTdGFmZiIsImV4cCI6MTczMjg5NDM2NCwiaXNzIjoiSG90ZWxBcHAiLCJhdWQiOiJIb3RlbEFwcFVzZXJzIn0.hWzKJ8tVstf1oxn3HZ1R52iRaS0SfIJyR58bYH0gE1U
+{
+  "userName": "Receptionist",
+  "passwordHash": "Receptionist",
+  "email": "Receptionist@hotel.com",
+  "phoneNumber": "01",
+  "Role" : "Staff"
+}
+
+### Create New Admin
+POST http://localhost:5000/api/users/staff
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiUmVjZXB0aW9uaXN0IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiI2NzQ5YzgwYzEwNDViMTNlNzMxMGYyNWYiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJTdGFmZiIsImV4cCI6MTczMjg5NDM2NCwiaXNzIjoiSG90ZWxBcHAiLCJhdWQiOiJIb3RlbEFwcFVzZXJzIn0.hWzKJ8tVstf1oxn3HZ1R52iRaS0SfIJyR58bYH0gE1U
+
+{
+  "userName": "Admin2",
+  "passwordHash": "Admin2",
+  "email": "Admin2@hotel.com",
+  "phoneNumber": "02",
+  "Role" : "Admin"
+}
+
+### Login admin
+POST http://localhost:5000/api/users/login/staff
+Content-Type: application/json
+
+{
+  "UserName": "adminin@hotel.com",
+  "Password": "Admin"
+}
+
+### Login receptionist
+POST http://localhost:5000/api/users/login/staff
+Content-Type: application/json
+
+{
+  "UserName": "receptionist@Hotel.com",
+  "Password": "Receptionist"
+}
+
+### Login customer
+POST http://localhost:5000/api/users/login/
+Content-Type: application/json
+
+{
+  "UserName": "CuStOmeR@customer.com",
+  "Password": "Customer"
+}
+
+###
+POST http://localhost:5000/api/rooms
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiQWRtaW4iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjY3NDljNzdmZmE0OTZkNWQ4NmY5YTJmNSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzMyODkyMTQ1LCJpc3MiOiJIb3RlbEFwcCIsImF1ZCI6IkhvdGVsQXBwVXNlcnMifQ.1gXVUc33v2z0wNyz3sAIMBSIeEULvAbkLLOmUo_N9-A
+
+{
+  "location": "Vaasa",
+  "category": "Deluxe",
+  "features": ["Pool", "King size bed"],
+  "IsAvailable": true,
+  "price": 200
 }
 
 ###
@@ -35,43 +100,29 @@ POST http://localhost:5000/api/bookings
 Content-Type: application/json
 
 {
-  "RoomId": "123"
-  "Name": "TestName",
-  "Email": "test@test.com",
-  "PhoneNumber": "123345457123",
-  "StartDate": "2025-11-11",
-  "EndDate": "2025-11-12",
-  "Comments": "Testcomment"
-}
-###
-POST http://localhost:5000/api/users/login
-Content-Type: application/json
-
-{
-  "UserName": "Test",
-  "Password": "Test"
+    "Name": "John Doe",
+    "Email": "john.doe@example.com",
+    "PhoneNumber": "123456789",
+    "StartDate": "2024-12-15",
+    "EndDate": "2024-12-20",
+    "Location": "Vaasa",
+    "Category": "Deluxe",       
+    "RoomId": "6749c95f1045b13e7310f261",
+    "Comments": "Looking forward to my stay!"
 }
 
 ###
-POST http://localhost:5000/api/rooms
+POST http://localhost:5000/api/bookings
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiVGVzdCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiNjc0NWYzNWMwMDE2YTA3MTM2MDAyZGU1IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJleHAiOjE3MzI2NDEyMjAsImlzcyI6IkhvdGVsQXBwIiwiYXVkIjoiSG90ZWxBcHBVc2VycyJ9.wtVFtF86fXD8aDILu18Ez6dNO9lFV5RfAhxGvxF8rVU
-{
-  "location": "Room 102",
-  "category": "Twin",
-  "features": ["postestfeature", "postestfeature2"],
-  "IsAvailable": true,
-  "price": 120
-}
 
-###
-POST http://localhost:5000/api/rooms
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6sadsadHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiVGVzdCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiNjc0NWYzNWMwMDE2YTA3MTM2MDAyZGU1IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJleHAiOjE3MzI2NDEyMjAsImlzcyI6IkhvdGVsQXBwIiwiYXVkIjoiSG90ZWxBcHBVc2VycyJ9.wtVFtF86fXD8aDILu18Ez6dNO9lFV5RfAhxGvxF8rVU
 {
-  "location": "Room 102",
-  "category": "Singlel",
-  "features": ["postestfeature", "postestfeature2"],
-  "IsAvailable": true,
-  "price": 100
+    "Name": "dianna Smith",
+    "Email": "dianna.smith@example.com",
+    "PhoneNumber": "987653333",
+    "StartDate": "2024-12-16",
+    "EndDate": "2024-12-21",
+    "Location": "Vaasa",
+    "Category": "Deluxe",
+    "RoomId": "6749c95f1045b13e7310f261",
+    "Comments": "Please confirm my reservation!."
 }

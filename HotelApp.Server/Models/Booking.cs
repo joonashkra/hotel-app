@@ -11,6 +11,10 @@ public class Booking
 
     public string? RoomId { get; set; } = null!;
 
+    public string? Location { get; set; }
+
+    public string? Category { get; set; }
+
     public string Name { get; set; } = null!;
 
     public string Email { get; set; } = null!;
@@ -22,5 +26,7 @@ public class Booking
     public string EndDate { get; set; } = null!;
 
     public string? Comments { get; set; }
+
+    public string? Status { get; set; }
 }
 

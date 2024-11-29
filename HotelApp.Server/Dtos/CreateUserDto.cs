@@ -12,5 +12,6 @@ public class CreateUserDto
 
     [Required] public string PhoneNumber { get; set; } = null!;
 
-    [Required] public bool IsAdmin { get; set; }
+    //ei oo välttämätöntä olla roolia Dto:ssa, jotta voi luoda roolittomia eli ns vaikka asiakaskäyttäjiä
+    public string Role { get; set; } = null!;
 }

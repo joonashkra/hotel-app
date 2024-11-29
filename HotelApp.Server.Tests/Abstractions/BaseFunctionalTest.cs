@@ -1,13 +1,12 @@
 ﻿
-namespace HotelApp.Server.Tests.Abstractions
-{
-    public class BaseFunctionalTest : IClassFixture<FunctionalTestWebAppFactory>
-    {
-        public BaseFunctionalTest(FunctionalTestWebAppFactory factory)
-        {
-            HttpClient = factory.CreateClient();
-        }
+namespace HotelApp.Server.Tests.Abstractions;
 
-        protected HttpClient HttpClient { get; init; }
+public class BaseFunctionalTest : IClassFixture<FunctionalTestWebAppFactory>
+{
+    public BaseFunctionalTest(FunctionalTestWebAppFactory factory)
+    {
+        HttpClient = factory.CreateClient();
     }
+
+    protected HttpClient HttpClient { get; init; }
 }

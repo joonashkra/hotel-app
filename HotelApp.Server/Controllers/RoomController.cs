@@ -70,7 +70,7 @@ public class RoomController : ControllerBase
         return CreatedAtAction(nameof(Get), new { id = newRoom.Id }, newRoom);
     }
 
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Staff")]
     [HttpPut("{id}")]
     public async Task<ActionResult> Put(string id, [FromBody] CreateRoomDto updatedRoom)
     {

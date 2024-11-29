@@ -1,26 +1,47 @@
 using HotelApp.Server.Models;
 using System.Net.Http.Json;
 using HotelApp.Server.Tests.Abstractions;
+using System.Net.Http.Headers;
 
-namespace HotelApp.Server.Tests.Rooms
+namespace HotelApp.Server.Tests.Rooms;
+
+public class GetRoomTest : BaseFunctionalTest
 {
-    public class GetRoomTest : BaseFunctionalTest
+    public GetRoomTest(FunctionalTestWebAppFactory factory) : base(factory) { }
+
+    public class LoginResponse
     {
-        public GetRoomTest(FunctionalTestWebAppFactory factory) : base(factory) { }
+        public string Token { get; set; }
+    }
 
-        [Fact]
-        public async Task Should_ReturnRooms()
+    [Fact]
+    public async Task Should_ReturnRooms()
+    {
+        var loginDto = new
         {
-            HttpResponseMessage response = await HttpClient.GetAsync("api/rooms");
+            UserName = "Admin",
+            Password = "Admin"
+        };
 
-            await Task.Delay(500);
+        HttpResponseMessage loginResponse = await HttpClient.PostAsJsonAsync("api/users/login/staff", loginDto);
+        loginResponse.EnsureSuccessStatusCode();
 
-            response.EnsureSuccessStatusCode();
+        // Deserialize to a strongly typed object
+        var loginResult = await loginResponse.Content.ReadFromJsonAsync<LoginResponse>();
+        string? token = loginResult.Token;
 
-            var rooms = await response.Content.ReadFromJsonAsync<List<Room>>();
+        Assert.NotNull(token);
 
-            Assert.NotNull(rooms);
-            Assert.NotEmpty(rooms);
-        }
+        HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        HttpResponseMessage response = await HttpClient.GetAsync("api/rooms");
+
+        await Task.Delay(500);
+
+        response.EnsureSuccessStatusCode();
+
+        var rooms = await response.Content.ReadFromJsonAsync<List<Room>>();
+
+        Assert.NotNull(rooms);
+        Assert.NotEmpty(rooms);
     }
 }

@@ -12,7 +12,6 @@ public class BookingService
     public BookingService(IOptions<HotelAppDatabaseSettings> hotelAppDatabaseSettings)
     {
         var mongoClient = new MongoClient(hotelAppDatabaseSettings.Value.ConnectionURI);
-
         var mongoDatabase = mongoClient.GetDatabase(hotelAppDatabaseSettings.Value.DatabaseName);
 
         _bookingsCollection = mongoDatabase.GetCollection<Booking>(hotelAppDatabaseSettings.Value.BookingsCollectionName);
@@ -24,9 +23,15 @@ public class BookingService
     public async Task PostBookingAsync(Booking newBooking) =>
         await _bookingsCollection.InsertOneAsync(newBooking);
 
+    public async Task<Booking?> GetBookingByIdAsync(string id) =>
+        await _bookingsCollection.Find(booking => booking.Id == id).FirstOrDefaultAsync();
+
+    public async Task UpdateBookingAsync(string id, Booking modifiedBooking) =>
+        await _bookingsCollection.ReplaceOneAsync(booking => booking.Id == id, modifiedBooking);
+
     public bool DatesConflict(DateTime startOfFirst, DateTime endOfFirst, DateTime startOfSecond, DateTime endOfSecond)
     {
-        return !(startOfFirst <= startOfSecond || startOfFirst >= endOfSecond);
+        return startOfFirst < endOfSecond && endOfFirst > startOfSecond;
     }
 }
 

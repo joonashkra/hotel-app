@@ -37,8 +37,7 @@ public class UserController : ControllerBase
         var claims = new[]
         {
             new Claim(ClaimTypes.Name, user.UserName ?? string.Empty),
-            new Claim(ClaimTypes.NameIdentifier, user.Id?.ToString() ?? string.Empty),
-            new Claim(ClaimTypes.Role, (bool)user.IsAdmin ? "Admin" : "User")
+            new Claim(ClaimTypes.NameIdentifier, user.Id?.ToString() ?? string.Empty)
         };
 
         var JWT_secretKey = System.Environment.GetEnvironmentVariable("JWT_SECRET_KEY");
@@ -59,7 +58,43 @@ public class UserController : ControllerBase
         return Ok(new { Token = jwt });
     }
 
-    [Authorize(Roles = "Admin")]
+    [HttpPost("login/staff")]
+    public async Task<ActionResult> StaffLogin([FromBody] LoginDto loginDto)
+    {
+        var user = await _userService.ValidateStaffMemberAsync(loginDto.UserName, loginDto.Password);
+
+        if (user == null)
+        {
+            return Unauthorized("Invalid credentials.");
+        }
+
+        var claims = new[]
+        {
+            new Claim(ClaimTypes.Name, user.UserName ?? string.Empty),
+            new Claim(ClaimTypes.NameIdentifier, user.Id?.ToString() ?? string.Empty),
+            new Claim(ClaimTypes.Role, user.Role ?? string.Empty)
+        };
+
+        var JWT_secretKey = System.Environment.GetEnvironmentVariable("JWT_SECRET_KEY");
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JWT_secretKey));
+        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+        var token = new JwtSecurityToken
+        (
+            _configuration["JwtSettings:Issuer"],
+            _configuration["JwtSettings:Audience"],
+            claims,
+            expires: DateTime.Now.AddHours(1),
+            signingCredentials: creds
+        );
+
+        var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+
+        return Ok(new { Token = jwt });
+    }
+
+    //henkilökunta pystyy hakeen userit
+    [Authorize(Roles = "Admin,Staff")]
     [HttpGet]
     public async Task<ActionResult<List<User>>> Get()
     {
@@ -73,9 +108,46 @@ public class UserController : ControllerBase
         return Ok(users);
     }
 
-    [HttpPost]
-    public async Task<ActionResult<User>> PostAdmin([FromBody] CreateUserDto newUserDto)
+    //vain admin pystyy hakee hlökuntakäyttäjät
+    [Authorize(Roles = "Admin")]
+    [HttpGet("staff")]
+    public async Task<ActionResult<List<User>>> GetStaffUsers()
     {
+        var users = await _userService.GetStaffUsersAsync();
+
+        foreach (var user in users)
+        {
+            user.PasswordHash = null;
+        }
+
+        return Ok(users);
+    }
+
+    //user without any role can be created by anyone, let's say it's for customers
+    [HttpPost]
+    public async Task<ActionResult<User>> PostUser([FromBody] CreateUserDto newUserDto)
+    {
+        //varmistetaan, ettei pysty luomaan uutta käyttäjää samalla nimellä, säpolla tai puhnrolla
+        var users = await _userService.GetUsersAsync();
+
+        foreach (var user in users)
+        {
+            if (user.UserName.Equals(newUserDto.UserName, StringComparison.OrdinalIgnoreCase))
+            {
+                return BadRequest($"Cannot create the user, username {newUserDto.UserName} already exists.");
+            }
+
+            if (user.Email.Equals(newUserDto.Email, StringComparison.OrdinalIgnoreCase))
+            {
+                return BadRequest($"Cannot create the user, user with email address {newUserDto.Email} already exists.");
+            }
+
+            if (user.PhoneNumber.Equals(newUserDto.PhoneNumber))
+            {
+                return BadRequest($"Cannot create the user, user with phone number {newUserDto.PhoneNumber} already exists.");
+            }
+        }
+
         var hashedPassword = BCrypt.Net.BCrypt.HashPassword(newUserDto.PasswordHash);
 
         var newUser = new User
@@ -84,18 +156,40 @@ public class UserController : ControllerBase
             PasswordHash = hashedPassword,
             Email = newUserDto.Email,
             PhoneNumber = newUserDto.PhoneNumber,
-            IsAdmin = false
+            Role = null
         };
 
         await _userService.PostUserAsync(newUser);
 
-        return CreatedAtAction(nameof(Get), new {id = newUser.Id}, newUser);
+        //return only username, so API wont respond with password hash
+        return CreatedAtAction(nameof(Get), new {id = newUser.Id}, newUser.UserName);
     }
 
     [Authorize(Roles = "Admin")]
-    [HttpPost("admin")]
-    public async Task<ActionResult<User>> PostUser([FromBody] CreateUserDto newUserDto)
+    [HttpPost("staff")]
+    public async Task<ActionResult<User>> PostStaff([FromBody] CreateUserDto newUserDto)
     {
+        //varmistetaan, ettei pysty luomaan uutta käyttäjää samalla nimellä, säpolla tai puhnrolla
+        var users = await _userService.GetStaffUsersAsync();
+
+        foreach (var user in users)
+        {
+            if (user.UserName.Equals(newUserDto.UserName, StringComparison.OrdinalIgnoreCase))
+            {
+                return BadRequest($"Cannot create the user, username {newUserDto.UserName} already exists.");
+            }
+
+            if (user.Email.Equals(newUserDto.Email, StringComparison.OrdinalIgnoreCase))
+            {
+                return BadRequest($"Cannot create the user, user with email address {newUserDto.Email} already exists.");
+            }
+
+            if (user.PhoneNumber.Equals(newUserDto.PhoneNumber))
+            {
+                return BadRequest($"Cannot create the user, user with phone number {newUserDto.PhoneNumber} already exists.");
+            }
+        }
+
         var hashedPassword = BCrypt.Net.BCrypt.HashPassword(newUserDto.PasswordHash);
 
         var newUser = new User
@@ -104,12 +198,13 @@ public class UserController : ControllerBase
             PasswordHash = hashedPassword,
             Email = newUserDto.Email,
             PhoneNumber = newUserDto.PhoneNumber,
-            IsAdmin = newUserDto.IsAdmin
+            Role = newUserDto.Role
         };
 
-        await _userService.PostUserAsync(newUser);
+        await _userService.PostStaffUserAsync(newUser);
 
-        return CreatedAtAction(nameof(Get), new { id = newUser.Id }, newUser);
+        //return only username, so API wont respond with password hash
+        return CreatedAtAction(nameof(Get), new { id = newUser.Id }, newUser.UserName);
     }
 }
 

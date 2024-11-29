@@ -21,6 +21,6 @@ public class User
     [BsonElement("phoneNumber")]
     public string? PhoneNumber { get; set; }
 
-    [BsonElement("isAdmin")]
-    public bool? IsAdmin { get; set; }
+    [BsonElement("role")]
+    public string? Role { get; set; }
 }
