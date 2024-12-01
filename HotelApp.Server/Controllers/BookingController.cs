@@ -12,10 +12,12 @@ namespace HotelApp.Server.Controllers;
 public class BookingController : ControllerBase
 {
     private readonly BookingService _bookingService;
+    private readonly RoomService _roomService;
 
-    public BookingController(BookingService bookingService)
+    public BookingController(BookingService bookingService, RoomService roomService)
     {
         _bookingService = bookingService;
+        _roomService = roomService;
     }
 
     [Authorize(Roles = "Admin,Staff")]
@@ -61,12 +63,24 @@ public class BookingController : ControllerBase
             Location = newBookingDto.Location
         };
 
+        //varmistetaan, että kyseinen sijainti on olemassa
+        bool exists = await _roomService.LocationExists(newBooking.Location);
+
+        if (!exists)
+        {
+            return BadRequest("Location where the booking was made isn't available or doesn't exist");
+        }
+
+        else if (string.IsNullOrEmpty(newBookingDto.Category) && string.IsNullOrEmpty(newBookingDto.RoomId))
+        {
+            return BadRequest("Booking must include at least Room or Category");
+        }
+
         //jos ei oo varauksessa mainittu huonetta tai categoriaa, varaus pendaa
-        if (newBooking.Category == null || newBooking.RoomId == null)
+        else if (string.IsNullOrEmpty(newBooking.Category) || string.IsNullOrEmpty(newBooking.RoomId))
         {
             newBooking.Status = "pending";
         }
-
         else
         {
             newBooking.Status = "confirmed";

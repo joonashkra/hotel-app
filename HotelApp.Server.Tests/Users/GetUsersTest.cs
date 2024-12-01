@@ -12,20 +12,9 @@ public class GetUsersTests : BaseFunctionalTest
     public async Task Should_NotReturnUsers()
     {
         HttpResponseMessage response = await HttpClient.GetAsync("api/users");
-        Console.WriteLine($"Response Status Code: {response.StatusCode}");
 
-        if (!response.IsSuccessStatusCode)
-        {
-            string responseBody = await response.Content.ReadAsStringAsync();
-            Console.WriteLine("Error response body: " + responseBody);
-            Assert.True(response.IsSuccessStatusCode, "API call was not successful");
-            return;
-        }
+        await Task.Delay(500);
 
-        string responseBodySuccess = await response.Content.ReadAsStringAsync();
-        Console.WriteLine("Response Body: " + responseBodySuccess);
-
-        var users = await response.Content.ReadFromJsonAsync<List<User>>();
-        Assert.Null(users);
+        Assert.Equal(System.Net.HttpStatusCode.Unauthorized, response.StatusCode);
     }
 }

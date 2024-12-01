@@ -8,16 +8,18 @@ public class DBInitializer
     private readonly IMongoDatabase _database;
     private readonly string _roomsCollectionName;
     private readonly string _usersCollectionName;
+    private readonly string _staffCollectionName;
     private readonly string _bookingsCollectionName;
     private readonly MongoClient _client;
 
-    public DBInitializer(string connectionURI, string databaseName, string roomsCollectionName, string usersCollectionName, string bookingsCollectionName)
+    public DBInitializer(string connectionURI, string databaseName, string roomsCollectionName, string usersCollectionName, string bookingsCollectionName, string staffCollectionName)
     {
         _client = new MongoClient(connectionURI);
         _database = _client.GetDatabase(databaseName);
         _roomsCollectionName = roomsCollectionName;
         _usersCollectionName = usersCollectionName;
         _bookingsCollectionName = bookingsCollectionName;
+        _staffCollectionName = staffCollectionName;
     }
 
     public async Task InsertSampleRooms()
@@ -61,33 +63,54 @@ public class DBInitializer
     public async Task InsertSampleUser()
     {
         var usersCollection = _database.GetCollection<BsonDocument>(_usersCollectionName);
-
+        string hashedpassword = BCrypt.Net.BCrypt.HashPassword("Testpassword");
         var sampleUser = new BsonDocument
         {
             { "userName", "Testuser1" },
-            { "passwordHash", "testuserpassword" },
+            { "passwordHash", hashedpassword },
             { "email", "testuser1@example.com" },
             { "phoneNumber", "test0451200321"},
             { "role", " " }
         };
 
-        var sampleUser2 = new BsonDocument
-        {
-            { "userName", "TestUser2" },
-            { "passwordHash", "testUserPassword2" },
-            { "email", "testuser2@example.com" },
-            { "phoneNumber", "test1928749812"},
-            { "role", " " }
-        };
-
-        var usersToInsert = new List<BsonDocument> { sampleUser, sampleUser2 };
-        await usersCollection.InsertManyAsync(usersToInsert);
+        var userToInsert = new List<BsonDocument> { sampleUser };
+        await usersCollection.InsertManyAsync(userToInsert);
 
         for (int attempt = 0; attempt < 10; attempt++)
         {
-            var roomsInDb = await usersCollection.Find(FilterDefinition<BsonDocument>.Empty).ToListAsync();
+            var userInDb = await usersCollection.Find(FilterDefinition<BsonDocument>.Empty).ToListAsync();
 
-            if (roomsInDb.Any())
+            if (userInDb.Any())
+            {
+                return;
+            }
+        }
+
+        throw new Exception("Users collection initialization failed.");
+    }
+
+    public async Task InsertSampleAdmin()
+    {
+        var staffCollection = _database.GetCollection<BsonDocument>(_staffCollectionName);
+        string hashedpassword = BCrypt.Net.BCrypt.HashPassword("Testadminpassword");
+
+        var sampleAdmin = new BsonDocument
+        {
+            { "userName", "TestAdmin" },
+            { "passwordHash", hashedpassword },
+            { "email", "testadmin@hotel.com" },
+            { "phoneNumber", "test0451200321"},
+            { "role", "Admin" }
+        };
+
+        var adminToInsert = new List<BsonDocument> { sampleAdmin };
+        await staffCollection.InsertManyAsync(adminToInsert);
+
+        for (int attempt = 0; attempt < 10; attempt++)
+        {
+            var adminInDb = await staffCollection.Find(FilterDefinition<BsonDocument>.Empty).ToListAsync();
+
+            if (adminInDb.Any())
             {
                 return;
             }
@@ -104,6 +127,7 @@ public class DBInitializer
         {
             { "RoomId", "123" },
             { "Name", "Test" },
+            { "Category", "Basic" },
             { "Email", "test@test.fi" },
             { "PhoneNumber", "045459422231" },
             { "StartDate", "2025-10-10" },
@@ -118,12 +142,12 @@ public class DBInitializer
             { "Category", "Deluxe" },
             { "Email", "test2@test.fi" },
             { "PhoneNumber", "045459422231" },
-            { "StartDate", "2025-10-08" },
-            { "EndDate", "2025-10-12" },
+            { "StartDate", "2025-10-15" },
+            { "EndDate", "2025-10-20" },
             { "Comments", "Testcomment2" }
         };
 
-        var bookingsToInsert = new List<BsonDocument> { sampleBooking };
+        var bookingsToInsert = new List<BsonDocument> { sampleBooking, sampleBooking2 };
         await bookingsCollection.InsertManyAsync(bookingsToInsert);
 
         for (int attempt = 0; attempt < 10; attempt++)
@@ -149,5 +173,8 @@ public class DBInitializer
 
         var bookingsCollection = _database.GetCollection<BsonDocument>(_bookingsCollectionName);
         await bookingsCollection.DeleteManyAsync(FilterDefinition<BsonDocument>.Empty);
+
+        var staffCollection = _database.GetCollection<BsonDocument>(_staffCollectionName);
+        await staffCollection.DeleteManyAsync(FilterDefinition<BsonDocument>.Empty);
     }
 }

@@ -44,4 +44,16 @@ public class RoomService {
 
         return result.DeletedCount > 0;
     }
+
+    public async Task<bool> LocationExists(string location)
+    {
+        var rooms = await GetRoomsAsync();
+
+        foreach (var room in rooms)
+        {
+            if (room.Location == location) return true;
+        }
+
+        return false;
+    }
 }

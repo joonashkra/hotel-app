@@ -12,6 +12,7 @@ public class FunctionalTestWebAppFactory : WebApplicationFactory<Program>, IAsyn
     private readonly string _roomsCollectionName = "roomsTest";
     private readonly string _usersCollectionName = "usersTest";
     private readonly string _bookingsCollectionName = "bookingsTest";
+    private readonly string _staffCollectionName = "staffTest";
     private readonly string? _connectionURI;
     private readonly DBInitializer? _dbInitializer;
 
@@ -26,7 +27,8 @@ public class FunctionalTestWebAppFactory : WebApplicationFactory<Program>, IAsyn
                 "hotelApp",
                 "roomsTest",
                 "usersTest",
-                "bookingsTest"
+                "bookingsTest",
+                "staffTest"
             );
         }
     }
@@ -55,6 +57,7 @@ public class FunctionalTestWebAppFactory : WebApplicationFactory<Program>, IAsyn
                 options.DatabaseName = _databaseName;
                 options.RoomsCollectionName = _roomsCollectionName;
                 options.UsersCollectionName = _usersCollectionName;
+                options.StaffCollectionName = _staffCollectionName;
                 options.BookingsCollectionName = _bookingsCollectionName;
             });
         });
@@ -66,6 +69,7 @@ public class FunctionalTestWebAppFactory : WebApplicationFactory<Program>, IAsyn
         {
             await _dbInitializer.InsertSampleRooms();
             await _dbInitializer.InsertSampleUser();
+            await _dbInitializer.InsertSampleAdmin();
             await _dbInitializer.InsertSampleBookings();
         }
     }
