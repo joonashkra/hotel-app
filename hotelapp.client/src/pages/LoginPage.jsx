@@ -5,9 +5,8 @@ export default function LoginPage() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
-
+  
   const { handleLogin } = useOutletContext()
-
   
   const navigate = useNavigate()
 
@@ -16,12 +15,12 @@ export default function LoginPage() {
     setErrorMsg('')
     try {
       await handleLogin({ username, password })
-      navigate('/management')
+      navigate('/')
     } catch (error) {
       setErrorMsg(error.message)
     }
   }
-  
+
   return (
     <div className='loginPage' >
         <form className='loginForm' onSubmit={login}>

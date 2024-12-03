@@ -15,5 +15,7 @@ public class BookingDto
     public string? Category { get; set; } = null!;
     public string? RoomId { get; set; } = null!;
     public string? Comments { get; set; }
+
+    public string? Status { get; set; } = null!;
 }
 

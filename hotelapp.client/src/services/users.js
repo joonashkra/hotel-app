@@ -16,6 +16,15 @@ const login = async credentials => {
     }
 }
 
+const loginStaff = async credentials => {
+    try {
+        const response = await axios.post(`${baseUrl}/login/staff`, credentials)
+        return response.data
+    } catch (error) {
+        return error
+    }
+}
+
 const create = async newUser => {
     const config = {
         headers: { Authorization: authToken }
@@ -45,4 +54,4 @@ const remove = async id => {
     }
 }
 
-export default { create, remove, login, setToken }
+export default { create, remove, login, setToken, loginStaff }

@@ -9,14 +9,14 @@ import { useOutletContext } from "react-router-dom";
 export default function ManagementPage() {
   const [rooms, setRooms] = useState([])
   const [bookings, setBookings] = useState([])
-  const { user, loading } = useOutletContext()
+  const { user, isLoading } = useOutletContext()
 
   useEffect(() => {
      roomService.getAll().then(rooms => setRooms(rooms))
   }, []);
 
   useEffect(() => {
-    if(user) bookingService.getAll().then(data => setBookings(data))
+    if(user?.role) bookingService.getAll().then(data => setBookings(data))
   }, [user])
 
   return (
@@ -24,17 +24,21 @@ export default function ManagementPage() {
       <h1>Management</h1>
       <div className="manageRoomsContent">
         <div>
-          <h2>Add New Room</h2>
-          <AddRoom rooms={rooms} setRooms={setRooms} />
-        </div>
-        <div>
           <h2>Bookings</h2>
-          <BookingList bookings={bookings} loading={loading}/>
+          <BookingList bookings={bookings} setBookings={setBookings} rooms={rooms} />
         </div>
-        <div>
-          <h2>Update & Delete existing rooms</h2>
-          <RoomsList rooms={rooms} setRooms={setRooms} />
-        </div>
+        {user?.role === 'Admin' && 
+          <>
+            <div>
+              <h2>Add New Room</h2>
+              <AddRoom rooms={rooms} setRooms={setRooms} />
+            </div>
+            <div>
+              <h2>Update & Delete existing rooms</h2>
+              <RoomsList rooms={rooms} setRooms={setRooms} />
+            </div>
+          </>
+        }
       </div>
     </div>
   )

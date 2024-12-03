@@ -18,7 +18,7 @@ export default function Room() {
   return (
     <div className="roomPage">
       <div>
-        <h1>Room {id}</h1>
+        <h1>Room ID: {id}</h1>
         <h2>Details:</h2>
         <div className="roomDetails">
           <p>Location: {room.location}</p>
@@ -33,8 +33,8 @@ export default function Room() {
         </div>
       </div>
       <div>
-        <h2>Book</h2>
-        <BookRoomForm roomId={id} />
+        <h2>Book this room</h2>
+        <BookRoomForm room={room} rooms={[]} />
       </div>
     </div>
   )

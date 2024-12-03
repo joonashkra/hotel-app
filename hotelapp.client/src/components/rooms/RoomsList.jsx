@@ -28,7 +28,7 @@ export const RoomsList = ({ rooms, setRooms }) => {
                 <div key={room.id} style={{ display: "flex" }}>
                     <Link to={`/rooms/${room.id}`}>
                         <li className="roomListItem">
-                            <p>Room no. {room.id}</p>
+                            <p>Room ID: {room.id}</p>
                             <div className="roomListDetails">
                                 <p>Location: {room.location}</p>
                                 <p>Price / Night: {room.price}€</p>

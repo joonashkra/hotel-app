@@ -28,6 +28,20 @@ public class BookingController : ControllerBase
         return Ok(bookings);
     }
 
+    [Authorize(Roles = "Admin,Staff")]
+    [HttpGet("{id:length(24)}")]
+    public async Task<ActionResult<Booking>> Get(string id)
+    {
+        var booking = await _bookingService.GetBookingByIdAsync(id);
+
+        if (booking is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(booking);
+    }
+
     [HttpPost]
     public async Task<ActionResult<Booking>> Post([FromBody] BookingDto newBookingDto)
     {
@@ -36,7 +50,7 @@ public class BookingController : ControllerBase
         //Varmistetaan, että ei oo samoille päiville huone varattuna jo
         foreach (var booking in bookings)
         {
-            if (newBookingDto.RoomId == booking.RoomId)
+            if (newBookingDto.RoomId is not null && (newBookingDto.RoomId == booking.RoomId))
             {
                 DateTime newBookingStartDate = DateTime.Parse(newBookingDto.StartDate);
                 DateTime newBookingEndDate = DateTime.Parse(newBookingDto.EndDate);
@@ -104,6 +118,7 @@ public class BookingController : ControllerBase
 
         var modifiedBooking = new Booking
         {
+            Id = id,
             RoomId = modifiedBookingDto.RoomId,
             Name = modifiedBookingDto.Name,
             Email = modifiedBookingDto.Email,
@@ -112,7 +127,8 @@ public class BookingController : ControllerBase
             EndDate = modifiedBookingDto.EndDate,
             Comments = modifiedBookingDto.Comments,
             Category = modifiedBookingDto.Category,
-            Location = modifiedBookingDto.Location
+            Location = modifiedBookingDto.Location,
+            Status = modifiedBookingDto.Status
         };
 
         var bookings = await _bookingService.GetBookingsAsync();
@@ -120,7 +136,7 @@ public class BookingController : ControllerBase
         //Varmistetaan, että ei oo samoille päiville huone varattuna jo
         foreach (var booking in bookings)
         {
-            if (modifiedBooking.RoomId == targetBooking.RoomId)
+            if (modifiedBooking.RoomId is not null && (modifiedBooking.RoomId == booking.RoomId) && (modifiedBooking.Id != booking.Id))
             {
                 DateTime newBookingStartDate = DateTime.Parse(modifiedBooking.StartDate);
                 DateTime newBookingEndDate = DateTime.Parse(modifiedBooking.EndDate);
@@ -134,7 +150,7 @@ public class BookingController : ControllerBase
             }
         }
 
-        await _bookingService.PostBookingAsync(modifiedBooking);
+        await _bookingService.UpdateBookingAsync(id, modifiedBooking);
 
         return NoContent();
     }

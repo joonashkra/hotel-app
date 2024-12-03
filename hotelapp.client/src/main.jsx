@@ -12,6 +12,7 @@ import Wrapper from './components/general/Wrapper.jsx'
 import UpdateRoom from './components/rooms/UpdateRoom.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import ProtectedRoute from './components/general/ProtectedRoute.jsx';
+import UpdateBooking from './components/bookings/UpdateBooking.jsx';
 
 const router = createBrowserRouter(
   [
@@ -34,6 +35,10 @@ const router = createBrowserRouter(
         {
           path: '/management/rooms/:id',
           element: (<ProtectedRoute><UpdateRoom /></ProtectedRoute>)
+        },
+        {
+          path: '/management/bookings/:id',
+          element: (<ProtectedRoute><UpdateBooking /></ProtectedRoute>)
         },
         {
           path: '/login',

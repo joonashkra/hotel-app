@@ -21,6 +21,20 @@ const getAll = async () => {
     }
 }
 
+const getById = async (id) => {
+    const config = {
+        headers: { Authorization: authToken }
+    }
+
+    try {
+        const response = await axios.get(`${baseUrl}/${id}`, config)
+        return response.data
+    } 
+    catch (error) {
+        return error
+    }
+}
+
 const create = async newBooking => {
     const config = {
         headers: { Authorization: authToken }
@@ -29,6 +43,22 @@ const create = async newBooking => {
     try {
         const response = await axios.post(baseUrl, newBooking, config)
         return response.data
+      } catch (error) {
+        console.error(error)
+        throw error
+      }
+}
+
+const update = (id, updatedBooking) => {
+
+    const config = {
+        headers: { Authorization: authToken }
+    }
+
+
+    try {
+        const response = axios.put(`${baseUrl}/${id}`, updatedBooking, config)
+        return response.then(response => response.data)
     } 
     catch (error) {
         return error
@@ -49,4 +79,4 @@ const remove = async id => {
     }
 }
 
-export default { getAll, create, remove, setToken }
+export default { getAll, getById, create, remove, setToken, update }

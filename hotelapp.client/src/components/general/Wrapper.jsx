@@ -7,8 +7,10 @@ import bookingService from '../../services/bookings'
 
 export default function NavBarWrapper() {
   const [user, setUser] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
+      setIsLoading(true)
       const loggedInUser = window.localStorage.getItem('loggedInUser')
       if(loggedInUser) {
         const user = JSON.parse(loggedInUser)
@@ -17,21 +19,28 @@ export default function NavBarWrapper() {
         userService.setToken(user.token)
         setUser(user)
       }
+      setIsLoading(false)
   }, [])
 
   const handleLogin = async (credentials) => {
-    const user = await userService.login(credentials)
-    if (!user.token) throw new Error('Wrong username or password.')
+    let user
+    //To make login possible for both customers and staff with only one form in UI
+    user = await userService.login(credentials)
+    if (!user.token) 
+      user = await userService.loginStaff(credentials)
+    if (!user.token) 
+      throw new Error('Wrong username or password.')
     window.localStorage.setItem('loggedInUser', JSON.stringify(user))
     roomService.setToken(user.token)
     bookingService.setToken(user.token)
     setUser(user)
   }
 
+
   return (
     <>
         <NavBar user={user} />
-        <Outlet context={{ handleLogin, user }} />
+        <Outlet context={{ handleLogin, user, isLoading }} />
     </>
   )
 }
