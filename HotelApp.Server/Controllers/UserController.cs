@@ -90,7 +90,7 @@ public class UserController : ControllerBase
 
         var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
-        return Ok(new { Token = jwt });
+        return Ok(new { Token = jwt, user.Role });
     }
 
     //henkilökunta pystyy hakeen userit

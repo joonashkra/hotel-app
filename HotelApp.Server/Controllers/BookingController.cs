@@ -138,5 +138,30 @@ public class BookingController : ControllerBase
 
         return NoContent();
     }
+
+    [Authorize(Roles = "Admin,Staff")]
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> Delete(string id)
+    {
+
+        var targetBooking = await _bookingService.GetBookingByIdAsync(id);
+
+        if (targetBooking == null)
+        {
+            return NotFound($"Couldn't find a booking with the same ID, nothing removed");
+        }
+
+        bool deletionSuccessful = await _bookingService.DeleteBookingAsync(id);
+        
+        if (deletionSuccessful == true)
+        {
+            return NoContent();
+        }
+
+        else
+        {
+            return StatusCode(500, $"An error occurred while deleting the booking");
+        }
+    }
 }
 

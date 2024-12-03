@@ -33,5 +33,12 @@ public class BookingService
     {
         return startOfFirst < endOfSecond && endOfFirst > startOfSecond;
     }
+
+    public async Task<bool> DeleteBookingAsync(string id)
+    {
+        var result = await _bookingsCollection.DeleteOneAsync(booking => booking.Id == id);
+
+        return result.DeletedCount > 0;
+    }
 }
 
