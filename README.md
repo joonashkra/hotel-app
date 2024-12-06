@@ -93,7 +93,7 @@ Resource limitations:
 
 # Deployment
 
--Render
+- Docker Image from Docker Hub that runs on Render's free web service hosting platform
 
 # Project schedule
 
@@ -104,11 +104,21 @@ Schedule:
 Phases:
 
   1st phase:
-    -Designing the backend structure
-    -OOAD
+    -Designing the app structure
+  2nd phase:
+    -Setting up development environment (Repository & CI)
+  3rd phase:
+    -Implementing designs into code
+  4th phase:
+    -Testing code
+  5th phase:
+    -Deploying application (Docker Hub -> Render)
+  6th phase:
+    -Repeat phases 3-5 until app is ready
+  
 
 ## Docker
-Running entire app with Docker, build and then run with port-mapping and env-option (.env file with DB connection string must be present in project root):
+Running entire app with Docker, build and then run with port-mapping and env-option (.env file with DB connection string & JWT Secret must be present in project root):
 ```console
 docker build -t hotelapp .
 docker run --name HotelApp -p 5000:80 --env-file .env hotelapp
@@ -116,6 +126,5 @@ docker run --name HotelApp -p 5000:80 --env-file .env hotelapp
 App is running on localhost:5000.
 
 ## Render
-Application deployed on Render: https://devops-hotelapp.onrender.com/
-App runs on Render with a single Docker image located in Docker Hub.
-(App is still critically in development-phase but for the purposes of the course and its tight schedule, testing the deployment was necessary)
+Application hosted on Render: https://devops-hotelapp.onrender.com/
+App runs on Render with a Docker image located in Docker Hub. Render’s free plan instance will spin down with inactivity. This can delay requests by 50 seconds or more. It sometimes needs a manual restart to start running again.
