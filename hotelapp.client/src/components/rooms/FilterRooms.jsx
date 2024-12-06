@@ -37,17 +37,17 @@ export default function FilterRooms({ rooms, setFilteredRooms }) {
     }
 
     return (
-        <div style={{ display: 'flex' , gap: '1rem'}}>
-            <div>
-                <label>Search by location</label>
+        <div className='filterRooms'>
+            <div className='filterInput'>
+                <label>Search by location:</label>
                 <select value={selectedLocation} onChange={handleLocationChange}>
                     {availableLocations.map((location, index) => 
                         <option key={index} value={location}>{location}</option>
                     )}
                 </select>
             </div>
-            <div>
-                <label>Search by category</label>
+            <div className='filterInput'>
+                <label>Search by category:</label>
                 <select value={selectedCategory} onChange={handleCategoryChange}>
                     {availableCategories.map((category, index) => 
                         <option key={index} value={category}>{category}</option>

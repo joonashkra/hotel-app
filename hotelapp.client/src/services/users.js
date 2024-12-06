@@ -8,50 +8,36 @@ const setToken = newToken => {
 }
 
 const login = async credentials => {
-    try {
-        const response = await axios.post(`${baseUrl}/login`, credentials)
-        return response.data
-    } catch (error) {
-        return error
-    }
+    const response = await axios.post(`${baseUrl}/login`, credentials)
+    return response.data
 }
 
 const loginStaff = async credentials => {
-    try {
-        const response = await axios.post(`${baseUrl}/login/staff`, credentials)
-        return response.data
-    } catch (error) {
-        return error
-    }
+    const response = await axios.post(`${baseUrl}/login/staff`, credentials)
+    return response.data
 }
 
 const create = async newUser => {
+    const response = await axios.post(baseUrl, newUser)
+    return response.data
+}
+
+const createStaff = async newUser => {
     const config = {
         headers: { Authorization: authToken }
     }
 
-    try {
-        const response = await axios.post(baseUrl, newUser, config)
-        return response.data
-    } 
-    catch (error) {
-        return error
-    }
+    const response = await axios.post(`${baseUrl}/staff`, newUser, config)
+    return response.data
 }
 
 const remove = async id => {
-
     const config = {
         headers: { Authorization: authToken }
     }
 
-    try {
-        const response = await axios.delete(`${baseUrl}/${id}`, config)
-        return response.data
-    } 
-    catch (error) {
-        return error
-    }
+    const response = await axios.delete(`${baseUrl}/${id}`, config)
+    return response.data
 }
 
-export default { create, remove, login, setToken, loginStaff }
+export default { create, remove, login, setToken, loginStaff, createStaff }

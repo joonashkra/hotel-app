@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import bookingService from '../../services/bookings'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function BookingList({ bookings, setBookings, rooms }) {
 
@@ -14,14 +14,14 @@ export default function BookingList({ bookings, setBookings, rooms }) {
         if (availableRooms.length > 0) setConfirmedRoom(availableRooms[0].id)
     }, [availableRooms])
 
-    if (!Array.isArray(bookings)) return <div className="loading">Loading...</div>
-
-    if(bookings.length < 1) return <p>No bookings yet.</p>
-
-    const deleteBooking = (id) => {
-        bookingService.remove(id).then(() => {
+    const deleteBooking = async (id) => {
+        try {
+            await bookingService.remove(id)
             setBookings(prevBookings => prevBookings.filter(booking => booking.id !== id))
-        })
+            window.alert("Booking deleted succesfully.")
+        } catch (error) {
+            window.alert(error.response.data)
+        }
     }
 
     const confirmBooking = async (booking) => {
@@ -30,60 +30,88 @@ export default function BookingList({ bookings, setBookings, rooms }) {
             status: 'confirmed',
             roomId: confirmedRoom
         }
-
-        await bookingService.update(booking.id, updatedBooking)
-
-        const updatedBookings = bookings.map(b => b.id === booking.id ? updatedBooking : b)
-
-        setBookings(updatedBookings)
-
-        window.alert("Booking confirmed succesfully!")
-        setConfirmAttempt(null)
+        try {
+            await bookingService.update(booking.id, updatedBooking)
+            const updatedBookings = bookings.map(b => b.id === booking.id ? updatedBooking : b)
+            setBookings(updatedBookings)
+            window.alert("Booking confirmed succesfully.")
+            setConfirmAttempt(null)
+        } catch (error) {
+            window.alert(error.response.data)
+        }
     }
 
-    const toggleConfirm = (booking) => {
+    const toggleConfirm = async (booking) => {
         setConfirmAttempt(booking.id)
-        setAvailableRooms(rooms.filter(room => (room.location === booking.location) && (room.category === booking.category))) 
+        const availableRooms = rooms.filter(room => (room.location === booking.location) && (room.category === booking.category))
+        if(availableRooms.length < 1) {
+            if(window.confirm(`No available rooms for location ${booking.location} and category ${booking.category}. Would you like to delete this booking?`)) {
+                deleteBooking(booking.id)
+            }
+            setConfirmAttempt(null)
+        }
+        setAvailableRooms(availableRooms) 
     }
+
+    if(bookings && bookings.length < 1) return <p>No bookings found.</p>
 
     return (
-        <ul className="bookingList">
-            {bookings.map((booking, index) => (
-                <div key={booking.id} style={{ display: "flex" }}>
-                    <li className="bookingItem" key={index}>
-                        <div className="bookingItemContent">
-                            <div className="bookingBasicInfo">
-                                <p style={{ fontWeight: "bold" }}>{booking.roomId ? `Room ID: ${booking.roomId}` : 'General booking'}</p>
-                                <p>Location: {booking.location}</p>
-                                <p>Category: {booking.category}</p>
-                                <p>From {booking.startDate} to {booking.endDate}</p>
-                                <hr/>
-                                <p>Name: {booking.name}</p>
-                                <p>Email: {booking.email}</p>
-                                <p>Phone: {booking.phoneNumber}</p>
-                                {booking.comments && <p>Comments: {booking.comments}</p>}
-                                <p style={{ color: `${booking.status === 'pending' ? 'red' : 'green'}` }}>Status: {booking.status.toUpperCase()}</p>
+        <ul className="bookingsList">
+            {bookings.map((booking) => (
+                <div key={booking.id}>
+                    <li className='bookingsListItemContainer'>
+                        <div className="bookingsListItem">
+                            <div className="bookingsListItemContent">
+                                {booking.roomId ? <Link to={`/rooms/${booking.roomId}`}>Room ID: {booking.roomId}</Link> : <a>General booking</a>}
+                                <div className="bookingsListItemDetails">
+                                    <div className='bookingsListItemRoomInfo'>
+                                        <p>Location: {booking.location}</p>
+                                        <p>Category: {booking.category}</p>
+                                        <p>From {booking.startDate} to {booking.endDate}</p>
+                                    </div>
+                                    <div className='bookingsListItemCustomerInfo'>
+                                        <p>Name: {booking.name}</p>
+                                        <p>Email: {booking.email}</p>
+                                        <p>Phone: {booking.phoneNumber}</p>
+                                    </div>
+                                </div>
+                                {booking.comments && <p>Comment: &quot;{booking.comments}&quot;</p>}
+                                <div className='bookingStatus'>
+                                    <p>Status:</p>
+                                    <p id='statusState' style={{ color: `${booking.status === 'pending' ? 'red' : 'green'}` }}>{booking.status.toUpperCase()}</p>
+                                </div>
+
+                            </div>
+                            <div className="managementActions">
+                                {(booking.status === 'pending' && !confirmAttempt) && <button onClick={() => toggleConfirm(booking)} style={{ backgroundColor: '#0D8947' }}>Confirm</button>}
+                                <button onClick={() => navigate(`${booking.id}`)}>Update</button>
+                                <button onClick={() => deleteBooking(booking.id)} style={{ backgroundColor: "red" }}>Delete</button>
                             </div>
                         </div>
+                        {confirmAttempt === booking.id && 
+                        <>
+                           <hr/>
+                           <h2 style={{ margin: '1rem', marginBottom: 0, fontSize: '1.2rem' }}>Confirm booking</h2>
+                           <div className='confirmBooking'>
+                                <div>
+                                    <p>Select available room with location {booking.location} and category {booking.category}</p>
+                                    <div className='confirmActions'>
+                                        <select onChange={(e) => setConfirmedRoom(e.target.value)} value={confirmedRoom}>
+                                            {availableRooms.map(room => (
+                                                <option key={room.id}>{room.id}</option>
+                                            ))}
+                                        </select>
+                                        <div style={{ display: 'flex', gap: '0.5rem' }}>
+                                            <button style={{ backgroundColor: '#0D8947' }} onClick={() => confirmBooking(booking)}>Confirm</button>
+                                            <button onClick={() => setConfirmAttempt(null)} style={{ backgroundColor: "red" }}>Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </> 
+                        }
                     </li>
-                    <div className="managementActions">
-                            {booking.status === 'pending' && <button onClick={() => toggleConfirm(booking)} style={{ backgroundColor: "green" }}>Confirm</button>}
-                            <button onClick={() => navigate(`bookings/${booking.id}`)} style={{ backgroundColor: "gray" }}>Update</button>
-                            <button onClick={() => deleteBooking(booking.id)} style={{ backgroundColor: "red" }}>Delete</button>
-                    </div>
-                    {confirmAttempt === booking.id && 
-                        <div>
-                            <p>Select a specific room for this booking to confirm.</p>
-                            <p>Room IDs with location {booking.location} and category {booking.category}:</p>
-                            <select onChange={(e) => setConfirmedRoom(e.target.value)} value={confirmedRoom}>
-                                {availableRooms.map(room => (
-                                    <option key={room.id}>{room.id}</option>
-                                ))}
-                            </select>
-                            <button onClick={() => confirmBooking(booking)} style={{ backgroundColor: "green" }}>Confirm</button>
-                        </div>
-                    }
-                </div>                   
+                </div>                 
             ))}
         </ul>
     )

@@ -8,23 +8,13 @@ const setToken = newToken => {
 }
 
 const getAll = async () => {
-    try {
-        const response = await axios.get(baseUrl)
-        return response.data
-    } 
-    catch (error) {
-        return error
-    }
+    const response = await axios.get(baseUrl)
+    return response.data
 }
 
-const getById = async (id) => {
-    try {
-        const response = await axios.get(`${baseUrl}/${id}`)
-        return response.data
-    } 
-    catch (error) {
-        return error
-    }
+const getById = async id => {
+    const response = await axios.get(`${baseUrl}/${id}`)
+    return response.data
 }
 
 const create = async newRoom => {
@@ -32,29 +22,17 @@ const create = async newRoom => {
         headers: { Authorization: authToken }
     }
 
-    try {
-        const response = await axios.post(baseUrl, newRoom, config)
-        return response.data
-    } 
-    catch (error) {
-        return error
-    }
+    const response = await axios.post(baseUrl, newRoom, config)
+    return response.data
 }
 
-const update = (id, updatedRoom) => {
-
+const update = async (id, updatedRoom) => {
     const config = {
         headers: { Authorization: authToken }
     }
 
-
-    try {
-        const response = axios.put(`${baseUrl}/${id}`, updatedRoom, config)
-        return response.then(response => response.data)
-    } 
-    catch (error) {
-        return error
-    }
+    const response = await axios.put(`${baseUrl}/${id}`, updatedRoom, config)
+    return response.data
 }
 
 const remove = async id => {
@@ -62,14 +40,8 @@ const remove = async id => {
         headers: { Authorization: authToken }
     }
 
-
-    try {
-        const response = await axios.delete(`${baseUrl}/${id}`, config)
-        return response.data
-    } 
-    catch (error) {
-        return error
-    }
+    const response = await axios.delete(`${baseUrl}/${id}`, config)
+    return response.data
 }
 
 export default { getAll, getById, create, update, remove, setToken }

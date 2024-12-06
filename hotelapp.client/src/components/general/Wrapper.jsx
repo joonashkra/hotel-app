@@ -5,12 +5,12 @@ import userService from '../../services/users'
 import roomService from '../../services/rooms'
 import bookingService from '../../services/bookings'
 
-export default function NavBarWrapper() {
+export default function Wrapper() {
   const [user, setUser] = useState(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const [loadingAuth, setLoadingAuth] = useState(true)
 
   useEffect(() => {
-      setIsLoading(true)
+      setLoadingAuth(true)
       const loggedInUser = window.localStorage.getItem('loggedInUser')
       if(loggedInUser) {
         const user = JSON.parse(loggedInUser)
@@ -19,28 +19,32 @@ export default function NavBarWrapper() {
         userService.setToken(user.token)
         setUser(user)
       }
-      setIsLoading(false)
+      setLoadingAuth(false)
   }, [])
 
   const handleLogin = async (credentials) => {
     let user
-    //To make login possible for both customers and staff with only one form in UI
-    user = await userService.login(credentials)
-    if (!user.token) 
-      user = await userService.loginStaff(credentials)
-    if (!user.token) 
-      throw new Error('Wrong username or password.')
+    try {
+        user = await userService.login(credentials)
+    } catch (error) {
+        if (error.response && error.response.status === 401) {
+            user = await userService.loginStaff(credentials)
+        } else {
+            throw error
+        }
+    }
+    if (!user.token) throw new Error('Invalid credentials.')
     window.localStorage.setItem('loggedInUser', JSON.stringify(user))
     roomService.setToken(user.token)
     bookingService.setToken(user.token)
     setUser(user)
   }
 
-
   return (
     <>
         <NavBar user={user} />
-        <Outlet context={{ handleLogin, user, isLoading }} />
+        {user && <p className="authText">{user?.role ? `Logged in as ${user?.role}` : 'Logged in as Customer'}</p>}
+        <Outlet context={{ handleLogin, user, loadingAuth }} />
     </>
   )
 }

@@ -12,13 +12,8 @@ const getAll = async () => {
         headers: { Authorization: authToken }
     }
 
-    try {
-        const response = await axios.get(baseUrl, config)
-        return response.data
-    } 
-    catch (error) {
-        return error
-    }
+    const response = await axios.get(baseUrl, config)
+    return response.data
 }
 
 const getById = async (id) => {
@@ -26,13 +21,8 @@ const getById = async (id) => {
         headers: { Authorization: authToken }
     }
 
-    try {
-        const response = await axios.get(`${baseUrl}/${id}`, config)
-        return response.data
-    } 
-    catch (error) {
-        return error
-    }
+    const response = await axios.get(`${baseUrl}/${id}`, config)
+    return response.data
 }
 
 const create = async newBooking => {
@@ -40,29 +30,17 @@ const create = async newBooking => {
         headers: { Authorization: authToken }
     }
 
-    try {
-        const response = await axios.post(baseUrl, newBooking, config)
-        return response.data
-      } catch (error) {
-        console.error(error)
-        throw error
-      }
+    const response = await axios.post(baseUrl, newBooking, config)
+    return response.data
 }
 
-const update = (id, updatedBooking) => {
-
+const update = async (id, updatedBooking) => {
     const config = {
         headers: { Authorization: authToken }
     }
 
-
-    try {
-        const response = axios.put(`${baseUrl}/${id}`, updatedBooking, config)
-        return response.then(response => response.data)
-    } 
-    catch (error) {
-        return error
-    }
+    const response = await axios.put(`${baseUrl}/${id}`, updatedBooking, config)
+    return response.data
 }
 
 const remove = async id => {
@@ -70,13 +48,8 @@ const remove = async id => {
         headers: { Authorization: authToken }
     }
 
-    try {
-        const response = await axios.delete(`${baseUrl}/${id}`, config)
-        return response.data
-    } 
-    catch (error) {
-        return error
-    }
+    const response = await axios.delete(`${baseUrl}/${id}`, config)
+    return response.data
 }
 
 export default { getAll, getById, create, remove, setToken, update }

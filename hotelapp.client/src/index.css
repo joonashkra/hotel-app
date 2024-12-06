@@ -1,31 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
-  font-weight: 400;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+  font-family: "Quicksand", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
 }
 
 body {
   margin: 0;
-  background-color: #1a1a1a;
-  color: white;
+  background-color: #E5E5E5;
+  color: #000000;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+h1, h2 {
+  color: #14213D;
+  font-weight: 500;
 }
 
 button {
@@ -36,248 +31,49 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #14213D;
   cursor: pointer;
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-#root {
-  margin: 0;
-}
-
-.navBar {
-  display: flex;
-  background-color: black;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 100%;
-  padding: 0 2rem;
-  box-sizing: border-box;
-}
-
-.navBar nav ul {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  font-size: 1.2rem;
-  gap: 4rem;
-}
-.navBar h1 {
-  padding-left: 10rem;
-  font-size: 2rem;
-}
-
-.navBar nav a {
-  color: white;
-  text-decoration: none;
-}
-
-.navBar nav a:hover {
-  color: white;
-  text-decoration: underline;
-}
-
-.rooms {
-  padding: 0 2rem;
-}
-
-.itemList {
-  display: flex;
-  flex-direction: column;
-  gap: 2vh;
-  width: 100%;
-  list-style: none;
-  padding-inline-start: 0;
-}
-
-.roomListItem {
-  background-color: black;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  color: white;
-}
-
-.roomListDetails {
-  display: flex;
-  gap: 2rem;
-}
-
-
-.roomPage {
-  margin: 2rem;
-  height: 84vh;
-  display: flex;
-  justify-content: space-evenly;
-}
-
-.roomDetails {
-  padding: 0 2rem; 
-  font-size: 1.5rem;
+  border-color: #ffffff;
 }
 
 .loading {
   font-size: 2rem;
   padding: 2rem;
-}
-
-.roomFeatureList {
-  margin: 0;
-  display: flex;
-  gap: 0.5rem;
-  padding-inline-start: 0.5rem;
-  margin: 0.5rem;
-}
-
-.roomFeatureList li {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-  justify-content: center;
-  background-color: #1a1a1a;
-  width: max-content;
-  padding: 0.5rem 0.5rem;
-  border-radius: 0.5rem;
-}
-
-.createRoomForm {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  width: max-content;
-  justify-content: center;
-  background-color: black;
-  padding: 2rem;
-  border-radius: 1rem;
-  max-width: fit-content;
-}
-
-#addFeatureBtn {
-  background: none;
-  padding: 0 0.5rem;
-  font-size: 1.2rem;
-  margin: 0;
-}
-
-#deleteBtn {
-  padding: 0;
-  font-size: 0.8rem;
-  background: none;
-}
-
-.roomFeatureList li p {
-  margin: 0;
-}
-
-.manageRoomsPage {
-  margin: 2rem;
-  height: 84dvh;
-  display: flex;
-  flex-direction: column;
-  width: 96dvw;
-  gap: 1rem;
-}
-
-.manageRoomsContent {
-  display: flex;
-  justify-content: space-between;
   width: 100%;
-}
-
-.homePage {
-  margin: 2rem;
-  height: 84dvh;
-  width: 96dvw;
-  gap: 1rem;
-}
-
-.homePageContent {
-  color:white;
-  width: 100%;
-  height: max-content;
-}
-
-.managementActions {
+  height: 100%;
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  gap: 1rem;
-  padding: 0 1rem;
-  width: max-content;
-}
-
-.bookRoomForm {
-  display: flex;
-  flex-direction: column;
-  gap: 4vh;
-  width: min-content;
-  background-color: black;
-  padding: 2rem;
-  border-radius: 1rem;
-}
-
-.bookingList {
-  display: flex;
-  flex-direction: column;
-  gap: 2vh;
-  width: max-content;
-  list-style: none;
-  padding-inline-start: 0;
-}
-
-.bookingItem {
-  display: flex;
   align-items: center;
-  justify-content: space-evenly;
-  background-color: black;
-  border-radius: 0.5rem;
-  padding: 1rem;
+  font-size: 2rem;
+  color:#14213D;
+}
+
+.errorMsg {
+  color: red;
+}
+
+::-moz-selection {
   color: white;
-  width: max-content;
+  background: #14213D;
 }
 
-.bookingItem:hover .bookingExtras {
-  display: block;
+::selection {
+color: white;
+background: #14213D;
 }
 
-.bookingExtras {
-  display: none;
+::-webkit-scrollbar {
+  width: 0.5rem;
 }
 
-.loginPage {
-  margin: 2rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 84dvh;
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
 }
 
-.loginForm {
-  display: flex;
-  flex-direction: column;
-  gap: 2dvh;
-  background-color: black;
-  padding: 2rem;
+::-webkit-scrollbar-thumb {
+  background: #a7a7a7;
   border-radius: 1rem;
-}
-
-.loginInput {
-  display: flex;
-  flex-direction: column;
-  gap:0.5dvh;
-  font-size: 1.2rem;
-}
-
-.loginInput input {
-  font-size: 1rem;
-  padding: 0.2rem;
 }

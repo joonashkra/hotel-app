@@ -1,0 +1,201 @@
+
+.roomsList {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  gap: 1rem;
+  padding-inline-start: 0;
+  width: 100%;
+}
+
+.roomsListItem {
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+  border-radius: 0.5rem;
+  background-color: #ffffff;
+  display: flex;
+  cursor: pointer;
+  justify-content: space-between;
+}
+
+.roomsListItem img {
+  width: 10rem;
+  height: 10rem;
+  filter: blur(10px);
+}
+
+.roomsListItemContent {
+  margin: 0 0 0 1rem;
+}
+
+.roomsListItemDetails {
+  display: flex;
+  gap: 1rem;
+}
+
+#roomId {
+  font-weight: 600;
+  margin: 1rem 0 0 0;
+}
+
+.managementActions {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin: 0 1rem 0 0;
+}
+
+.createRoomForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background-color: #FFFFFF;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+  width: fit-content;
+}
+
+.roomInput {
+  display: flex;
+  flex-direction: column;
+  gap:0.5rem;
+  font-size: 1.2rem;
+}
+
+.roomInput input {
+  font-size: 1rem;
+  padding: 0.2rem;
+  width: max-content;
+}
+
+.featureInputField {
+  display: flex;
+  align-items: center;
+}
+
+.addRoomFeatureList {
+  margin: 0;
+  display: flex;
+  gap: 0.5rem;
+  padding-inline-start: 0;
+  flex-wrap: wrap;
+}
+
+.addRoomFeatureList li {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  width: max-content;
+  padding: 0.3rem 0.5rem;
+  border-radius: 0.5rem;
+  background-color: #E5E5E5;
+  color: #14213D;
+  font-size: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+
+#addFeatureBtn {
+  background: none;
+  color: #14213D;
+  padding: 0 0.5rem;
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+#addFeatureBtn:hover {
+  color: #14213dce;
+}
+
+#deleteBtn {
+  padding: 0;
+  font-size: 1rem;
+  background: none;
+  color: red;
+  transition: none;
+}
+
+#deleteBtn:hover {
+  border-color: #E5E5E5;
+  color: rgb(194, 0, 0);
+  font-weight: 500;
+}
+
+.addRoomFeatureList li p {
+  margin: 0;
+}
+
+.addRoomActions {
+  display: flex;
+  margin-top: 1rem;
+  justify-content: space-between;
+}
+
+#clearFormBtn {
+  background-color: red;
+}
+
+.filterRooms {
+  display: flex;
+  width: 100%;
+  gap: 1rem;
+}
+
+.filterInput {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.filterInput select {
+  font-size: 0.8rem;
+  padding: 0.2rem;
+  border-radius: 0.3rem;
+}
+
+.roomDetails {
+  font-size: 1.5rem;
+}
+
+.roomDetails li {
+  list-style: circle;
+}
+
+.updateRoomForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background-color: #FFFFFF;
+  padding: 3rem;
+  border-radius: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+  width: fit-content;
+}
+
+.updateRoomForm input {
+  width: max-content;
+  font-size: 1rem;
+  padding: 0.2rem;
+}
+
+.updateRoomForm h2 {
+  margin: 0;
+}
+
+.updateActions {
+  display: flex;
+  margin-top: 1rem;
+  justify-content: space-between;
+}
+
+#cancelUpdate {
+  background-color: red;
+}
+
+.roomManagementActions {
+  display: flex;
+  gap:1rem;
+  margin-top: 2rem;
+}
+

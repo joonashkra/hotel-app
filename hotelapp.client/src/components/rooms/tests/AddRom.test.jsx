@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { AddRoom } from '../AddRoom';
 import { RoomsList } from '../RoomsList';
 import roomService from '../../../services/rooms';
-import testData from './testData.json';
+import testData from '../../../testData.json';
 
 vi.mock('../../../services/rooms', () => {
     return {
@@ -32,11 +32,11 @@ test('adds room', async () => {
     )
 
     const locationInput = screen.getByPlaceholderText('Type location...')
-    const featureInput = screen.getByPlaceholderText('Type new feature...')
-    const priceInput = screen.getByPlaceholderText('Type price...')
     const categoryInput = screen.getByPlaceholderText('Type category...')
-    const addRoomBtn = screen.getByTestId('addRoomBtn')
+    const featureInput = screen.getByPlaceholderText('Type new feature...')
     const addFeatureBtn = screen.getByTestId('addFeatureBtn')
+    const priceInput = screen.getByPlaceholderText('Type price...')
+    const addRoomBtn = screen.getByTestId('addRoomBtn')
 
     fireEvent.change(locationInput, { target: { value: 'testLocation' } })
     fireEvent.change(featureInput, { target: { value: 'testFeature' } })

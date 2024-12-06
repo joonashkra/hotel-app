@@ -1,17 +1,19 @@
-import { useEffect } from "react";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useEffect } from "react"
+import { useNavigate, useOutletContext } from "react-router-dom"
 
-export default function ProtectedRoute({ children }) {
-    const { user, isLoading } = useOutletContext()
+export default function ProtectedRoute({ children, roles = [] }) {
+    const { user, loadingAuth } = useOutletContext()
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (!isLoading && (!user || user.role === null)) {
-            navigate("/", { replace: true })
+        if (!loadingAuth) {
+            if (!user || !roles.includes(user.role)) {
+                navigate("/", { replace: true })
+            }
         }
-    }, [user, navigate, isLoading])
+    }, [user, navigate, loadingAuth, roles])
 
-    if (isLoading) return <div>Loading...</div>
+    if (loadingAuth) return <div>Loading...</div>
 
-    return user?.role ? children : null
+    return roles.includes(user?.role) ? children : null
 }

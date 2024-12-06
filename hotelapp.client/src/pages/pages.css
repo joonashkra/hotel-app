@@ -1,0 +1,61 @@
+.roomsPage {
+  margin: 2rem;
+}
+
+.roomsPageContent {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+.roomPage {
+  margin: 2rem;
+  display: flex;
+  justify-content: space-evenly;
+}
+  
+.manageRoomsPage {
+  margin: 2rem;
+  height: 84dvh;
+  display: flex;
+  flex-direction: column;
+  width: 96dvw;
+  gap: 1rem;
+}
+
+.manageRoomsContent {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.loginPage {
+  margin: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 84dvh;
+}
+
+.bookingsPage {
+  display: flex;
+  margin: 2rem;
+  justify-content: space-evenly;
+}
+
+.updateRoomPage {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.updateBookingPage {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem;
+  justify-content: center;
+  align-items: center;
+}
