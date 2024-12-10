@@ -11,6 +11,7 @@ export default function RoomPage() {
     const [loading, setLoading] = useState(true)
     const navigate = useNavigate()
     const { user } = useOutletContext()
+    const [isRoomView, setIsRoomView] = useState(true)
 
     const { id } = useParams();
 
@@ -42,13 +43,16 @@ export default function RoomPage() {
       }
     }
 
+    const switchView = () => {
+      setIsRoomView(!isRoomView)
+    }
+
     if(loading) return <div>Loading...</div>
     if(errorMsg) return <p style={{ color: "red" }}>{errorMsg}</p>
 
   return (
     <div className="roomPage">
-      <div>
-        <h1>Room ID: {id}</h1>
+      <div className={`${isRoomView ? 'bookRoomSection' : 'hidden'}`}>
         <Room room={room} />
         {user?.role === 'Admin' && 
           <div className="roomManagementActions">
@@ -57,10 +61,11 @@ export default function RoomPage() {
           </div>
         }
       </div>
-      <div>
-        <h2>Book this room</h2>
+      <div className={`${!isRoomView ? 'bookRoomSection' : 'hidden'}`}>
+        <h2>Book room</h2>
         <BookRoomForm room={room} rooms={[]} />
       </div>
+      <button onClick={switchView} id="toggleBookBtn" style={!isRoomView ? { backgroundColor: 'red' } : {}}>{isRoomView ? 'Book Room' : 'Cancel'}</button>
     </div>
   )
 }

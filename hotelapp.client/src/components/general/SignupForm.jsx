@@ -59,8 +59,8 @@ export default function SignupForm({ toggleSignup }) {
             <input required type='password' value={passwordHash} name='password' onChange={({ target }) => setPasswordHash(target.value)} data-testid="password" placeholder='Type new password...' />
         </div>
         {isStaff && 
-          <div>
-            <label style={{ fontSize: '1.2rem' }}>Role</label>
+          <div className='authFormStaffSection'>
+            <label id='authFormStaffLabel'>Role</label>
             <select id='staffSelect' name="role" onChange={(e) => setRole(e.target.value)} value={role}>
                 <option>Staff</option>
                 <option>Admin</option>

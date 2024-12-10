@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 import { NavLink, useNavigate } from "react-router-dom"
+import Exit from '../../assets/Exit'
+import Menu from '../../assets/Menu'
 
 export default function NavBar({ user }) {
     const navigate = useNavigate()
@@ -38,7 +40,9 @@ export default function NavBar({ user }) {
         <div className="navBar">
             <div className="navBarTitle">
                 <h1>HotelApp</h1>
-                <button id="menuBtn" onClick={() => setDropDown(!dropdown)}>Menu</button>
+                <div id="menuBtn" onClick={() => setDropDown(!dropdown)}>
+                    {dropdown ? <Exit /> : <Menu />}
+                </div>
             </div>
             <nav className="largeScreenNav">
                 <ul>

@@ -13,21 +13,6 @@
   display: flex;
   justify-content: space-evenly;
 }
-  
-.manageRoomsPage {
-  margin: 2rem;
-  height: 84dvh;
-  display: flex;
-  flex-direction: column;
-  width: 96dvw;
-  gap: 1rem;
-}
-
-.manageRoomsContent {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
 
 .loginPage {
   margin: 2rem;
@@ -35,7 +20,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 80dvh;
+  height: 70dvh;
 }
 
 .bookingsPage {
@@ -60,11 +45,52 @@
   align-items: center;
 }
 
+.staffSignupPage {
+  margin: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80dvh;
+}
+
 @media (max-width: 1100px) {
   .roomsPage {
     margin: 1rem;
   }
   .roomsPage h2 {
     display: none;
+  }
+  .roomPage {
+    display: block;
+    margin-top: 0;
+  }
+  .bookingsPage {
+    margin: 1rem;
+    display: block;
+  }
+  .bookingsPage h2 {
+    display: none;
+  }
+  .updateRoomPage {
+    margin-top: 0;
+    font-size: 0.7rem;
+  }
+  .updateBookingPage {
+    margin-top: 0;
+    font-size: 0.7rem;
+  }
+  .staffSignupPage {
+    font-size: 0.6rem;
+    margin: 1rem;
+  }
+  .loginPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .loginPage h1 {
+    font-size: 1.6rem;
+    margin-top: 4rem;
   }
 }

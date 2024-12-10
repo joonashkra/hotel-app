@@ -60,8 +60,8 @@ export default function UpdateBookingForm({ id, booking }) {
 
   return (
     <form className="updateBookingForm" onSubmit={updateBooking}>
-        <h2>Room ID: {booking.roomId}</h2>
-        <div style={{ display: 'flex', justifyContent: 'space-between', gap:'1rem'}}>
+        {booking.roomId && <h2>Room ID: {booking.roomId}</h2>}
+        <div className="updateBookingCustomerSection" style={{ display: 'flex', justifyContent: 'space-between', gap:'1rem'}}>
           <div className="bookingInput">
               <label>Name</label>
               <input required type="text" name="name" value={name} placeholder="Type your name..." onChange={(e) => setName(e.target.value)} />
@@ -75,7 +75,7 @@ export default function UpdateBookingForm({ id, booking }) {
               <input required type="text" name="phone" value={phoneNumber} placeholder="Type your phone number..." onChange={(e) => setPhoneNumber(e.target.value)} />
           </div>
         </div>
-        <div style={{ display: 'flex', gap:'1rem'}}>
+        <div className="updateBookingRoomSection" style={{ display: 'flex', gap:'1rem'}}>
           <div className="bookingInput">
               <label>Location</label>
               <input required type="text" name="location" value={location} placeholder="Type your phone number..." onChange={(e) => setLocation(e.target.value)} />
@@ -85,7 +85,7 @@ export default function UpdateBookingForm({ id, booking }) {
               <input required type="text" name="category" value={category} placeholder="Type your phone number..." onChange={(e) => setCategory(e.target.value)} />
           </div>
         </div>
-        <div style={{ display: 'flex', gap:'1rem'}}>
+        <div className="dateSection" style={{ display: 'flex', gap:'1rem'}}>
           <div className="bookingInput">
               <label>Start Date</label>
               <input required type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
@@ -103,7 +103,6 @@ export default function UpdateBookingForm({ id, booking }) {
           <button type="submit">Update booking</button>
           <button onClick={cancelUpdate} id="cancelUpdate" type="button">Cancel</button>
         </div>
-
     </form>
   )
 }

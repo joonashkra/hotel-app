@@ -3,6 +3,7 @@
 export default function Room({ room }) {
   return (
     <div className="roomDetails">
+        <h1>Room ID: {room.id}</h1>
         <p>Location: {room.location}</p>
         <p>Category: {room.category}</p>
         <div>

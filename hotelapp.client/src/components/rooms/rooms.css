@@ -197,6 +197,14 @@
   display: none;
 }
 
+#toggleBookBtn {
+  display: none;
+}
+
+.roomDetails h1 {
+  font-size: 2rem;
+}
+
 @media (max-width: 1100px) {
   #RoomsNavBar {
     display: flex;
@@ -207,7 +215,7 @@
     box-sizing: border-box;
     border-radius: 0.3rem;
     box-shadow: rgba(0, 0, 0, 0.22) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.2rem;
   }
   .roomsNavLink {
     position: relative;
@@ -279,6 +287,32 @@
 
   #deleteBtn {
     font-size: 0.8rem;
+  }
+
+  #toggleBookBtn {
+    display: flex;
+    justify-self: center;
+    margin: 1rem;
+  }
+
+  .roomDetails {
+    font-size: 1.2rem;
+  }
+  .roomDetails h1 {
+    font-size: 1.5rem;
+  }
+  .updateRoomForm {
+    align-items: start;
+    padding: 1.5rem;
+  }
+  .updateRoomForm h2 {
+    font-size: 1.1rem;
+  }
+  .updateRoomSection1 {
+    flex-direction: column;
+  }
+  .updateActions {
+    width: 100%;;
   }
 }
 

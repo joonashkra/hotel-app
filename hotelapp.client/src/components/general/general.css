@@ -105,6 +105,10 @@
   display: none;
 }
 
+#authFormStaffLabel {
+  font-size: 1.2rem;
+}
+
 @media (max-width: 1100px) {
   .navBar {
     display: block;
@@ -124,7 +128,9 @@
     height: max-content;
   }
   #menuBtn {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .largeScreenNav {
     display: none;
@@ -139,12 +145,11 @@
     display: flex;
     align-items: end;
     gap: 1rem;
-    margin: 1rem 0 1.5rem 0;
+    margin: 0.5rem 0 1.5rem 0;
     width: 100%;
     justify-content: space-around;
   }
   #smallScreenNavLinks a {
-    font-size: 1rem;
     color: #14213D;
     text-decoration: none;
     position: relative;
@@ -163,13 +168,33 @@
     transition: transform 0.25s ease-out;
     position: absolute;
   }
-  
   #smallScreenNavLinks a:hover::after {
     transform: scaleX(1);
     transform-origin: bottom center;
   }
-
   .authText {
     display: none;
+  }
+  .authInput {
+    font-size: 1rem;
+  }
+  .authInput input {
+    font-size: 0.9rem;
+  }
+  #authFormStaffLabel {
+    font-size: 1rem;
+  }
+  .authForm button {
+    width: max-content;
+    align-self: center;
+  }
+}
+
+@media (max-width: 365px) {
+  .navBarTitle h1 {
+    font-size: 1.2rem;
+  }
+  #smallScreenNavLinks a {
+    font-size: 0.8rem;
   }
 }

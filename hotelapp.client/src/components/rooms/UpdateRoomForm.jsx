@@ -39,7 +39,7 @@ export default function UpdateRoomForm({ id, room }) {
   return (
     <form onSubmit={updateRoom} className='updateRoomForm'>
         <h2>Room ID: {room.id}</h2>
-        <div style={{ display: 'flex', justifyContent: 'space-between', gap:'1rem'}}>
+        <div className="updateRoomSection1" style={{ display: 'flex', justifyContent: 'space-between', gap:'1rem'}}>
           <div className="roomInput">
             <label>Location: </label>
             <input required type='text' name='location' value={location} placeholder='Edit location...' onChange={({ target }) => setLocation(target.value)}/>

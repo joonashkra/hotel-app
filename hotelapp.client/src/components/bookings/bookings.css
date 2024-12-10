@@ -182,4 +182,53 @@
       align-self: center;
       margin-top: 1rem;
     }
+    .bookRoomSection {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .bookRoomSection h2 {
+      margin-bottom: 0.5rem;
+    }
+    .bookingsList {
+      width: 100%;
+    }
+    .bookingsListItem {
+      display: block;
+      padding: 0.5rem 0 1rem 0;
+    }
+    .bookingsListItemContent {
+      display: block;
+    }
+    .bookingsListItemDetails {
+      display: block;
+    }
+    .managementActions {
+      flex-direction: row;
+      margin-bottom: 1rem;
+    }
+    .confirmActions {
+      flex-direction: column;
+    }
+    .confirmActions select {
+      width: max-content;
+    }
+    .updateBookingForm {
+      padding: 1.5rem;
+    }
+    .updateBookingForm h2 {
+      font-size: 1.1rem;
+    }
+    .updateBookingCustomerSection {
+      flex-direction: column;
+    }
+    .updateBookingRoomSection {
+      flex-direction: column;
+    }
+    .dateSection {
+      flex-direction: column;
+    }
+    .updateActions {
+      gap: 1rem;
+    }
   }
