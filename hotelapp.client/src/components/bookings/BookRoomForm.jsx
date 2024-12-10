@@ -92,7 +92,7 @@ export default function BookRoomForm({ room, rooms, bookings, setBookings }) {
       </div>
       <div className="bookingRoomInfo">
         {!isRoomSpecific && 
-          <>
+          <div className="categoryLocationInput">
             <div style={{ display: 'flex', flexDirection: 'column' }} className="bookingInput">
                 <label>Location</label>
                 <select name="location" onChange={(e) => setLocation(e.target.value)} value={location}>
@@ -109,7 +109,7 @@ export default function BookRoomForm({ room, rooms, bookings, setBookings }) {
                   ))}
                 </select>
             </div>
-          </>
+          </div>
         }
         <div className="bookingInput">
           <label>Check-in</label>

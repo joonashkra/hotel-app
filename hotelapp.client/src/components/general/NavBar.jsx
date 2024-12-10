@@ -4,6 +4,7 @@ import { NavLink, useNavigate } from "react-router-dom"
 export default function NavBar({ user }) {
     const navigate = useNavigate()
     const [loggedIn, setLoggedIn] = useState(false)
+    const [dropdown, setDropDown] = useState(false)
 
     useEffect(() => {
         setLoggedIn(!!user)
@@ -35,8 +36,11 @@ export default function NavBar({ user }) {
 
     return (
         <div className="navBar">
-            <h1>HotelApp</h1>
-            <nav>
+            <div className="navBarTitle">
+                <h1>HotelApp</h1>
+                <button id="menuBtn" onClick={() => setDropDown(!dropdown)}>Menu</button>
+            </div>
+            <nav className="largeScreenNav">
                 <ul>
                     {!loggedIn ? (
                         <>
@@ -57,6 +61,27 @@ export default function NavBar({ user }) {
                     )}
                 </ul>
             </nav>
+            {dropdown && 
+                <nav className="smallScreenNav" onClick={() => setDropDown(!dropdown)}>
+                        {!loggedIn ? (
+                            <div id="smallScreenNavLinks">
+                                <NavLink to="/">Home</NavLink>
+                                <NavLink to="/login">Login</NavLink>
+                            </div>
+                        ) : (
+                            <div id="smallScreenNavLinks">
+                                {roleBasedLinks.map(({ to, label }) => (
+                                    <NavLink key={to} to={to} style={({ isActive }) => ({ textDecoration: isActive ? 'underline' : 'none' })}>
+                                        {label}
+                                    </NavLink>
+                                ))}
+                                <a onClick={handleLogout} style={{ cursor: "pointer" }}>
+                                    Log Out
+                                </a>
+                            </div>
+                        )}
+                </nav>
+            }
         </div>
     )
 }

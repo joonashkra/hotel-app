@@ -24,7 +24,7 @@
   gap: 4rem;
 }
 
-.navBar nav a {
+.largeScreenNav a {
   color: #14213D;
   text-decoration: none;
   position: relative;
@@ -32,7 +32,7 @@
   font-size: 1.3rem;
 }
 
-.navBar nav a::after {
+.largeScreenNav a::after {
   content: '';
   display: block;
   width: 100%;
@@ -44,7 +44,7 @@
   position: absolute;
 }
 
-.navBar nav a:hover::after {
+.largeScreenNav a:hover::after {
   transform: scaleX(1);
   transform-origin: bottom center;
 }
@@ -95,4 +95,81 @@
 
 #staffSelect {
   width: max-content;
+}
+
+.smallScreenNav {
+  display: none;
+}
+
+#menuBtn {
+  display: none;
+}
+
+@media (max-width: 1100px) {
+  .navBar {
+    display: block;
+    width: 100%;
+  }
+  .navBarTitle {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .navBarTitle h1 {
+    font-size: 1.5rem;
+  }
+  .navBarTitle button {
+    width: max-content;
+    height: max-content;
+  }
+  #menuBtn {
+    display: block;
+  }
+  .largeScreenNav {
+    display: none;
+  }
+  .smallScreenNav {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+  #smallScreenNavLinks {
+    align-items: center;
+    display: flex;
+    align-items: end;
+    gap: 1rem;
+    margin: 1rem 0 1.5rem 0;
+    width: 100%;
+    justify-content: space-around;
+  }
+  #smallScreenNavLinks a {
+    font-size: 1rem;
+    color: #14213D;
+    text-decoration: none;
+    position: relative;
+    font-weight: 500;
+    text-underline-offset: 0.5rem;
+    font-size: 1rem;
+  }
+  #smallScreenNavLinks a::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 0.05rem;
+    background-color: #14213D;
+    transform: scaleX(0);
+    transform-origin: bottom center;
+    transition: transform 0.25s ease-out;
+    position: absolute;
+  }
+  
+  #smallScreenNavLinks a:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom center;
+  }
+
+  .authText {
+    display: none;
+  }
 }

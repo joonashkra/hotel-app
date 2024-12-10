@@ -26,6 +26,7 @@ export default function UpdateBookingForm({ id, booking }) {
       setComments(booking.comments || '')
     }
   }, [booking])
+  
 
   const updateBooking = async (event) => {
     event.preventDefault()
@@ -49,7 +50,13 @@ export default function UpdateBookingForm({ id, booking }) {
     } catch (error) {
         window.alert(error.response.data)
     }
-}
+  }
+
+  const cancelUpdate = () => {
+    if(window.confirm('Cancel update? All changes will be lost.')) {
+      navigate(`/bookings`)
+    }
+  }
 
   return (
     <form className="updateBookingForm" onSubmit={updateBooking}>
@@ -94,7 +101,7 @@ export default function UpdateBookingForm({ id, booking }) {
         </div>
         <div className="updateActions">
           <button type="submit">Update booking</button>
-          <button id="cancelUpdate" type="button">Cancel</button>
+          <button onClick={cancelUpdate} id="cancelUpdate" type="button">Cancel</button>
         </div>
 
     </form>

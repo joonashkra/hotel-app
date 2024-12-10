@@ -42,7 +42,7 @@ export const AddRoom = ({ rooms, setRooms, setErrorMsg }) => {
 
   return (
     <form onSubmit={addRoom} className='createRoomForm'>
-      <div style={{ display: 'flex', justifyContent: 'space-between', gap:'1rem'}}>
+      <div className='createRoomSection1' style={{ display: 'flex', justifyContent: 'space-between', gap:'1rem'}}>
         <div className='roomInput'>
           <label>Location</label>
           <input type='text' name='location' value={location} placeholder='Type location...' onChange={({ target }) => setLocation(target.value)}/>

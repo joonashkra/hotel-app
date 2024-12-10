@@ -17,12 +17,6 @@
   justify-content: space-between;
 }
 
-.roomsListItem img {
-  width: 10rem;
-  height: 10rem;
-  filter: blur(10px);
-}
-
 .roomsListItemContent {
   margin: 0 0 0 1rem;
 }
@@ -199,3 +193,97 @@
   margin-top: 2rem;
 }
 
+#RoomsNavBar {
+  display: none;
+}
+
+@media (max-width: 1100px) {
+  #RoomsNavBar {
+    display: flex;
+    background-color: #FFFFFF;
+    justify-content: space-around;
+    color: #FFFFFF;
+    align-items: center;
+    box-sizing: border-box;
+    border-radius: 0.3rem;
+    box-shadow: rgba(0, 0, 0, 0.22) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    margin-bottom: 0.5rem;
+  }
+  .roomsNavLink {
+    position: relative;
+    text-decoration: none;
+    padding: 0.5rem 0;
+    color: #14213D;
+    font-weight: 500;
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .roomsNavLink::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0.05rem;
+    background-color: #14213dda;
+    border-radius: 0.5rem;
+    transition: width 0.3s ease;
+  }
+  
+  .roomsNavLink.active::after {
+    width: 98%;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .createRoomForm {
+    margin: 0;
+  }
+
+  .roomsPageFormContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .createRoomSection1 {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .roomsListItemContent {
+    margin: 0 1rem 0 1rem;
+  }
+
+  .roomInput {
+    font-size: 1rem;
+  }
+
+  .roomInput input {
+    font-size: 0.9rem;
+  }
+
+  button {
+    font-size: 0.9rem;
+  }
+
+  .addRoomFeatureList li p {
+    font-size: 0.9rem;
+  }
+
+  #deleteBtn {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 515px) {
+  .filterRooms {
+    flex-direction: column;
+  }
+}

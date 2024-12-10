@@ -35,7 +35,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 84dvh;
+  height: 80dvh;
 }
 
 .bookingsPage {
@@ -58,4 +58,13 @@
   margin: 2rem;
   justify-content: center;
   align-items: center;
+}
+
+@media (max-width: 1100px) {
+  .roomsPage {
+    margin: 1rem;
+  }
+  .roomsPage h2 {
+    display: none;
+  }
 }

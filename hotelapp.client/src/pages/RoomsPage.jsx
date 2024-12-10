@@ -14,6 +14,7 @@ export default function RoomsPage() {
     const [errorMsg, setErrorMsg] = useState('')
     const [loading, setLoading] = useState(true)
     const { user } = useOutletContext()
+    const [isRoomsView, setIsRoomsView] = useState(true)
 
     useEffect(() => {
         setLoading(true)
@@ -35,33 +36,45 @@ export default function RoomsPage() {
         setFilteredRooms(rooms)
     }, [rooms])
 
+    const switchView = () => {
+        setIsRoomsView(!isRoomsView)
+    }
+
     if(loading) return <div className='loading'>Loading...</div>
     if(errorMsg) return <div>{errorMsg}</div>
 
     return (
         <div className='roomsPage'>
             {errorMsg && <p style={{ color: "red" }}>{errorMsg}</p>}
+            {user?.role !== 'Staff' &&
+                <nav id='RoomsNavBar'>
+                    <a className={`roomsNavLink ${isRoomsView ? 'active' : ''}`} onClick={switchView}>Rooms</a>
+                    <a className={`roomsNavLink ${!isRoomsView ? 'active' : ''}`} onClick={switchView}>{user?.role ? 'Add Room' : 'Book Room'}</a>
+                </nav>
+            }
             <div className='roomsPageContent'>
-                <div>
+                <div className={`${isRoomsView ? 'roomsPageListContainer' : 'hidden'}`}>
                     <h2>Rooms</h2>
-                    <p>Click on a room to see details and {user?.role === 'Admin' ? 'update or delete it' : 'make a booking'}.</p>
+                    <p>Click room {user?.role === 'Admin' ? 'to update or delete it' : 'for details and make a booking'}.</p>
                     <FilterRooms rooms={rooms} setFilteredRooms={setFilteredRooms} />
                     <RoomsList rooms={filteredRooms} setRooms={setRooms} user={user} />
                 </div>
-                {user?.role === 'Admin' &&
-                    <div>
-                        <h2>Add Room</h2>
-                        <p>Add new room available for customers and staff.</p>
-                        <AddRoom rooms={rooms} setRooms={setRooms} setErrorMsg={setErrorMsg} />
-                    </div>
-                }
-                {!user?.role && 
-                    <div>
-                        <h2>Book a room</h2>
-                        <p>Make a general booking for any room in location and category of your choice.</p>
-                        <BookRoomForm rooms={rooms} />
-                    </div>
-                }
+                <div className={`${!isRoomsView ? 'roomsPageFormContainer' : 'hidden'}`}>
+                    {user?.role === 'Admin' &&
+                        <>
+                            <h2>Add Room</h2>
+                            <p>Add new room available for customers.</p>
+                            <AddRoom rooms={rooms} setRooms={setRooms} setErrorMsg={setErrorMsg} />
+                        </>
+                    }
+                    {!user?.role && 
+                        <>
+                            <h2>Book a room</h2>
+                            <p>Make a general booking for any room in location and category of your choice.</p>
+                            <BookRoomForm rooms={rooms} />
+                        </>
+                    }
+                </div>
             </div>
         </div>
     );
