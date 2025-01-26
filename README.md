@@ -1,6 +1,6 @@
 # HotelApp
 
-This hotel reservation web application was developed as a teamwork project for a school course. The repository's commit history details each team member's contributions, including my specific work on the project. The project was [originally hosted on GitLab](https://gitlab.com/joonashkra/hotelapp) per the assignment instructions, which accounts for the GitLab CI files in its history. For clarity and consistency, I later imported the project to GitHub, where my other projects are also hosted.
+This hotel reservation web application was developed as a teamwork project for a school course. The repository's commit history details each team member's contributions, including my specific work on the project. The project was [originally hosted on GitLab](https://gitlab.com/joonashkra/hotelapp) per the assignment instructions, which accounts for the GitLab CI files in its history. For clarity and consistency, I later imported the project to GitHub, where my other projects are also hosted. The application is [deployed on Render](https://devops-hotelapp.onrender.com/), but the free instance will spin down with inactivity, which can delay requests by 50 seconds or more. Log in with username: {role}, password: {role} to test its functionalitites. The accessible roles are presented in the Project Overview below.
 
 ## Project Overview
 
