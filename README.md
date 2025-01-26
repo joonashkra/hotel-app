@@ -1,6 +1,6 @@
 # HotelApp
 
-This hotel reservation web application was developed as a teamwork project for a school course. The repository's commit history details each team member's contributions, including my specific work on the project. The project was originally hosted on GitLab per the assignment instructions, which accounts for the GitLab CI files in its history. For clarity and consistency, I later imported the project to GitHub, where my other projects are also hosted.
+This hotel reservation web application was developed as a teamwork project for a school course. The repository's commit history details each team member's contributions, including my specific work on the project. The project was [originally hosted on GitLab](https://gitlab.com/joonashkra/hotelapp) per the assignment instructions, which accounts for the GitLab CI files in its history. For clarity and consistency, I later imported the project to GitHub, where my other projects are also hosted.
 
 ## Project Overview
 
@@ -17,9 +17,11 @@ The application features persistent data storage and includes user authenticatio
 - **React**: Frontend framework for building the user interface.  
 - **ASP.NET**: Backend framework for handling business logic and API.  
 - **MongoDB**: Database for storing application data.  
+- **Vitest**: Frontend Testing Library
+- **Xunit**: Backend Testing Library
 - **Docker**: Containerization to streamline application deployment.  
 - **GitLab CI**: Used for continuous integration during the initial development phase (removed from this GitHub repository).  
-- **Render**: Cloud platform for hosting the application.  
+- **Render**: Cloud platform for hosting the application.
 
 ## Running the Application with Docker
 
