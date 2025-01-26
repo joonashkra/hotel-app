@@ -1,59 +1,66 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState } from "react";
 
 export default function FilterRooms({ rooms, setFilteredRooms }) {
+  const [selectedLocation, setSelectedLocation] = useState("All");
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
-    const [selectedLocation, setSelectedLocation] = useState('All')
-    const [selectedCategory, setSelectedCategory] = useState('All')
+  const availableLocations = useMemo(() => {
+    return ["All", ...new Set(rooms.map((room) => room.location))];
+  }, [rooms]);
 
-    const availableLocations = useMemo(() => {
-        return ['All', ...new Set(rooms.map((room) => room.location))]
-    }, [rooms])
+  const availableCategories = useMemo(() => {
+    return ["All", ...new Set(rooms.map((room) => room.category))];
+  }, [rooms]);
 
-    const availableCategories = useMemo(() => {
-        return ['All', ...new Set(rooms.map((room) => room.category))]
-    }, [rooms])
-
-    const applyFilters = (location, category) => {
-        let filteredRooms = rooms
-        if (location !== 'All') {
-            filteredRooms = filteredRooms.filter(room => room.location === location)
-        }
-        if (category !== 'All') {
-            filteredRooms = filteredRooms.filter(room => room.category === category)
-        }
-        setFilteredRooms(filteredRooms)
+  const applyFilters = (location, category) => {
+    let filteredRooms = rooms;
+    if (location !== "All") {
+      filteredRooms = filteredRooms.filter(
+        (room) => room.location === location,
+      );
     }
-
-    const handleLocationChange = (e) => {
-        const location = e.target.value
-        setSelectedLocation(location)
-        applyFilters(location, selectedCategory)
+    if (category !== "All") {
+      filteredRooms = filteredRooms.filter(
+        (room) => room.category === category,
+      );
     }
+    setFilteredRooms(filteredRooms);
+  };
 
-    const handleCategoryChange = (e) => {
-        const category = e.target.value
-        setSelectedCategory(category)
-        applyFilters(selectedLocation, category)
-    }
+  const handleLocationChange = (e) => {
+    const location = e.target.value;
+    setSelectedLocation(location);
+    applyFilters(location, selectedCategory);
+  };
 
-    return (
-        <div className='filterRooms'>
-            <div className='filterInput'>
-                <label>Search by location:</label>
-                <select value={selectedLocation} onChange={handleLocationChange}>
-                    {availableLocations.map((location, index) => 
-                        <option key={index} value={location}>{location}</option>
-                    )}
-                </select>
-            </div>
-            <div className='filterInput'>
-                <label>Search by category:</label>
-                <select value={selectedCategory} onChange={handleCategoryChange}>
-                    {availableCategories.map((category, index) => 
-                        <option key={index} value={category}>{category}</option>
-                    )}
-                </select>
-            </div>
-        </div>
-    )
+  const handleCategoryChange = (e) => {
+    const category = e.target.value;
+    setSelectedCategory(category);
+    applyFilters(selectedLocation, category);
+  };
+
+  return (
+    <div className="filterRooms">
+      <div className="filterInput">
+        <label>Search by location:</label>
+        <select value={selectedLocation} onChange={handleLocationChange}>
+          {availableLocations.map((location, index) => (
+            <option key={index} value={location}>
+              {location}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="filterInput">
+        <label>Search by category:</label>
+        <select value={selectedCategory} onChange={handleCategoryChange}>
+          {availableCategories.map((category, index) => (
+            <option key={index} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
+      </div>
+    </div>
+  );
 }

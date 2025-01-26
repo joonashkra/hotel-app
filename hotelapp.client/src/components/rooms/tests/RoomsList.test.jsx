@@ -1,21 +1,21 @@
-import { render, screen } from '@testing-library/react'
-import { BrowserRouter } from 'react-router-dom'
-import { RoomsList } from '../RoomsList'
-import testData from '../../../testData.json';
+import { render, screen } from "@testing-library/react";
+import { BrowserRouter } from "react-router-dom";
+import { RoomsList } from "../RoomsList";
+import testData from "../../../testData.json";
 
-const setRooms = vi.fn()
+const setRooms = vi.fn();
 
-test('renders all rooms', () => {
-    const rooms = testData
+test("renders all rooms", () => {
+  const rooms = testData;
 
-    render(
-        <BrowserRouter>
-            <RoomsList rooms={rooms} setRooms={setRooms} />
-        </BrowserRouter>
-    )
+  render(
+    <BrowserRouter>
+      <RoomsList rooms={rooms} setRooms={setRooms} />
+    </BrowserRouter>,
+  );
 
-    const element = screen.getByTestId('roomsList')
-    expect(element).toBeDefined()
+  const element = screen.getByTestId("roomsList");
+  expect(element).toBeDefined();
 
-    expect(element.children).toHaveLength(rooms.length)
-})
+  expect(element.children).toHaveLength(rooms.length);
+});

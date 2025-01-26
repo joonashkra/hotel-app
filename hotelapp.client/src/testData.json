@@ -1,38 +1,37 @@
 [
-    {
-      "_id": { "$oid": "673261a1485da6885d0b9da1" },
-      "Location": "Vaasa",
-      "Features": ["Fridge", "Tv"],
-      "IsAvailable": true,
-      "Price": 120
-    },
-    {
-      "_id": { "$oid": "673261a1485da6885d0b9da2" },
-      "Location": "Helsinki",
-      "Features": ["WiFi", "Air Conditioning"],
-      "IsAvailable": false,
-      "Price": 150
-    },
-    {
-      "_id": { "$oid": "673261a1485da6885d0b9da3" },
-      "Location": "Tampere",
-      "Features": ["Kitchen", "Washer"],
-      "IsAvailable": true,
-      "Price": 110
-    },
-    {
-      "_id": { "$oid": "673261a1485da6885d0b9da4" },
-      "Location": "Oulu",
-      "Features": ["Fridge", "Balcony"],
-      "IsAvailable": true,
-      "Price": 130
-    },
-    {
-      "_id": { "$oid": "673261a1485da6885d0b9da5" },
-      "Location": "Turku",
-      "Features": ["Tv", "WiFi"],
-      "IsAvailable": false,
-      "Price": 140
-    }
-  ]
-  
+  {
+    "_id": { "$oid": "673261a1485da6885d0b9da1" },
+    "Location": "Vaasa",
+    "Features": ["Fridge", "Tv"],
+    "IsAvailable": true,
+    "Price": 120
+  },
+  {
+    "_id": { "$oid": "673261a1485da6885d0b9da2" },
+    "Location": "Helsinki",
+    "Features": ["WiFi", "Air Conditioning"],
+    "IsAvailable": false,
+    "Price": 150
+  },
+  {
+    "_id": { "$oid": "673261a1485da6885d0b9da3" },
+    "Location": "Tampere",
+    "Features": ["Kitchen", "Washer"],
+    "IsAvailable": true,
+    "Price": 110
+  },
+  {
+    "_id": { "$oid": "673261a1485da6885d0b9da4" },
+    "Location": "Oulu",
+    "Features": ["Fridge", "Balcony"],
+    "IsAvailable": true,
+    "Price": 130
+  },
+  {
+    "_id": { "$oid": "673261a1485da6885d0b9da5" },
+    "Location": "Turku",
+    "Features": ["Tv", "WiFi"],
+    "IsAvailable": false,
+    "Price": 140
+  }
+]

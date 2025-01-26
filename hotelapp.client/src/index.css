@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
 
 :root {
   line-height: 1.5;
@@ -14,12 +14,13 @@
 
 body {
   margin: 0;
-  background-color: #E5E5E5;
+  background-color: #e5e5e5;
   color: #000000;
 }
 
-h1, h2 {
-  color: #14213D;
+h1,
+h2 {
+  color: #14213d;
   font-weight: 500;
 }
 
@@ -31,7 +32,7 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #14213D;
+  background-color: #14213d;
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -48,7 +49,7 @@ button:hover {
   justify-content: center;
   align-items: center;
   font-size: 2rem;
-  color:#14213D;
+  color: #14213d;
 }
 
 .errorMsg {
@@ -57,12 +58,12 @@ button:hover {
 
 ::-moz-selection {
   color: white;
-  background: #14213D;
+  background: #14213d;
 }
 
 ::selection {
-color: white;
-background: #14213D;
+  color: white;
+  background: #14213d;
 }
 
 ::-webkit-scrollbar {
